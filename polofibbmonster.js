@@ -119,7 +119,6 @@ app.get('/', function(req, res) {
 
             app.listen(process.env.PORT || 8080, function() {});
 poloniex.subscribe('ticker');
-poloniex.subscribe('BTC_BCH');
 //poloniex.subscribe('BTC_ETC');
  var vols = [];
  var doVols = false;
@@ -574,6 +573,7 @@ var dbo;
 				//console.log('dbo');
 				
 				});
+				var bestAsk = []
 poloniex.on('message', (channelName, data, seq) => {
   if (channelName === 'ticker') {
 	  msgcount++;
@@ -614,8 +614,25 @@ poloniex.on('message', (channelName, data, seq) => {
 			 //console.log(Object.keys(data[0].data.asks)[0]);
 			 //console.log(Object.keys(data[0].data.bids)[0]);
 			 var collection = dbo.collection(channelName);
+			 bestAsk[channelName] = data[0].data.asks)[0];
 			 update(Object.keys(data[0].data.asks)[0], Object.keys(data[0].data.bids)[0], channelName, collection)
-		 poloniex.unsubscribe(channelName);
+		 //poloniex.unsubscribe(channelName);
+		 }
+		 for (var d in data){
+		 else if (data[d].type =='orderBookModify'){
+			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask'){
+				 bestAsk[channelName] = data[d].data.rate;
+				 console.log(data[d].data.rate);
+				 update(data[d].data.rate, data[d].data.rate, channelName, collection)
+			 }
+		 }
+		 else if (data[d].type =='orderBookRemove'){
+			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask'){
+				 bestAsk[channelName] = data[d].data.rate;
+				 console.log(data[d].data.rate);
+				 update(0, data[d].data.rate, channelName, collection)
+			 }
+		 }
 		 }
 		//	 }
 	}
