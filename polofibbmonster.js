@@ -119,7 +119,7 @@ app.get('/', function(req, res) {
 								//console.log(data);
 								var ccc = 0;
 							for (var d in data){
-							totals,push({'pair': d, 'total:' 0});
+							totals,push({'pair': d, 'total': 0});
 								if (data[d].length > 0){
 									for (var a in data[d]){
 										data[d][a].pair = d;
