@@ -57,17 +57,7 @@ app.get('/', function(req, res) {
                 }).toArray(function(err, doc3) {
 					for (var d in doc3){
 					//	////console.log(doc3[d])
-						if (doc3[d].order1){
-						poloniex.returnOrderTrades(doc3[d].order1, function(data){
-							orders.push(data);
-						});
-						}
-						if (doc3[d].order2){
-						poloniex.returnOrderTrades(doc3[d].order2, function(data){
-							orders.push(data);
-							console.log(data);
-						});
-						}
+						
 						//////console.log(doc3[d].trades);
 						if (doc3[d].trades){
 						if (doc3[d].trades.bought1 == false){
@@ -99,7 +89,7 @@ app.get('/', function(req, res) {
 							res.send('temporary error, retry');
 						} else {
 							//////console.log(balances.BTC);
-						poloniex.returnOpenOrders(doc3[d].currencyPair, function(data){
+						poloniex.returnOpenOrders(doc3[d].trades.currencyPair, function(data){
 							console.log(data);
 							var openorders = data;
 							stoplimits.sort(sortFunction);
@@ -379,7 +369,7 @@ function update2(wp, collection, callback){
 		console.log(data2);
 		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (data3){
 		console.log(data3);
-			d3d.trades.order1 = data3.orderNumber;
+		
 			cc.update({
 				'trades.currencyPair': d3d.trades.currencyPair
 			}, {
@@ -413,7 +403,6 @@ function update2(wp, collection, callback){
 		console.log(data2);
 		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (data3){
 			console.log(data3);
-			d3d.trades.order2 = data3.orderNumber;
 			cc.update({
 				'trades.currencyPair': d3d.trades.currencyPair
 			}, {
