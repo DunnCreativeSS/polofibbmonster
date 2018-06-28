@@ -573,7 +573,17 @@ function doCollections(collections, balances){
 							
             for (var c in collections) {
                 var collection = collections[c];
-                collection.find({
+                collectionDo(collection);
+
+
+
+							}
+        }
+            });	
+    });
+}
+function collectionDo(collection){
+	collection.find({
 
                 }, {
                     $exists: true
@@ -650,13 +660,6 @@ godobuy = false;
 					
 					}}
                 });
-
-
-
-							}
-        }
-            });	
-    });
 }
 var dbo;
 				MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
