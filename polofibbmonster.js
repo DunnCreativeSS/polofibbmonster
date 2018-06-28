@@ -14,8 +14,8 @@ var path = require('path')
 var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 	function sortFunction3(a,b){  
-				var dateA = new Date(a.datetime).getTime();
-				var dateB = new Date(b.datetime).getTime();
+				var dateA = new Date(a.date).getTime();
+				var dateB = new Date(b.date).getTime();
 				return dateA < dateB ? 1 : -1;  
 			}; 
 var dorefresh = false;
