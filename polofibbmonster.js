@@ -26,6 +26,11 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 		var stoplimits = []
 		var orders = []
 		var count = 0;
+function sortFunction2(a,b){  
+	var dateA = (a.percent);
+	var dateB = (b.percent);
+	return dateA < dateB ? 1 : -1;  
+}; 
 function sortFunction(a,b){  
 	var dateA = (a.percent);
 	var dateB = (b.percent);
@@ -104,7 +109,7 @@ app.get('/', function(req, res) {
 								}
 							}
 							btcbal += parseFloat(balances.BTC);
-							orders.sort(sortFunction);
+							orders.sort(sortFunction2);
 							var percent =  (100 * (-1 * (1 - (btcbal / startBtc)))).toFixed(4);
 					var diff2 = Math.abs(new Date() - startDate);
 					var minutes = Math.floor((diff2/1000)/60);
