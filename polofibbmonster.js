@@ -243,7 +243,9 @@ poloniex.subscribe('ticker');
 				winners[p].bought1 = false;
 				winners[p].bought2 = false;
 				winners[p].cancelled = false;
+				if (winners[p].currencyPair.substr(0, winners[p].currencyPair.indexOf('_')) == 'BTC'){
 				update(winners[p], collection);
+				}
 							
 			}
 	}
@@ -263,11 +265,11 @@ poloniex.subscribe('ticker');
 				'trades': wp
 			}, function(err, res) {
 				if (err) console.log(err);
-			  //console.log(res.result);
+			  console.log(res.result);
 			});
 		} else {
 			
-		////console.log(result.result);
+		console.log(result.result);
 		}
 	});
  }
