@@ -352,9 +352,13 @@ MongoClient.connect(process.env.mongodb, function(err, db) {
 function update21(wp, collection, callback){
 	 collection.update({
 		'trades.currencyPair': wp.currencyPair
-	},  $set: {
+	},{
+                            $set: {
                                 'trades.bought1': true
-                            },
+                            }
+                        }, {
+		
+	},
 	function(err, result) {
 
 		if (err) console.log(err);
@@ -373,11 +377,15 @@ function update21(wp, collection, callback){
 	});
  }
  function update22(wp, collection, callback){
-	 collection.update({
+	collection.update({
 		'trades.currencyPair': wp.currencyPair
-	},  $set: {
+	},{
+                            $set: {
                                 'trades.bought2': true
-                            },
+                            }
+                        }, {
+		
+	},
 	function(err, result) {
 
 		if (err) console.log(err);
