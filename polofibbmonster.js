@@ -91,7 +91,10 @@ app.get('/', function(req, res) {
 							var btcbal = 0;
 							for (var bal in balances){
 								var ticker = 'BTC_' + bal;
-								btcbal += bestAsk[ticker] * balances[bal];
+								console.log(ticker);
+								console.log(bestAsk[ticker]);
+								console.log(balances[bal]);
+								btcbal += (parseFloat(bestAsk[ticker]) * parseFloat(balances[bal]));
 							}
 							btcbal += balances.BTC;
 							//////console.log(balances.BTC);
