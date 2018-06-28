@@ -367,6 +367,7 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
                 setTimeout(function() {
                     doCollections(collections);
                 }, 500);
+					}
     });
 });
 }, 10000);
