@@ -10,7 +10,7 @@ const express = require('express');
 var startDate = new Date('2018/06/28 19:20')
 var favicon = require('serve-favicon')
 var path = require('path')
- var startBtc = 0.0077699113181331995;
+ var startBtc = 0.0077605141763145;
 var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
@@ -306,13 +306,43 @@ poloniex.subscribe('ticker');
 					if (!winnas.includes(winners[p].currencyPair)){
 						winnas.push(winners[p].currencyPair);
 											subs(winners[p].currencyPair);
-
+					
 					//insert(winners[p], collection);
 					}
+					updateStoplimits(winners[p], collection);
 							}
 				}
 							
 			}
+	}
+	function updateStoplimits(wp, collection){
+		collection.find({
+
+                }, {
+                    $exists: true
+                }).sort({
+                    _id: -1
+
+                }).toArray(function(err, doc3) {
+                    for (var d in doc3) {
+						if (doc3[d].trades){
+							doc3[d].trades.buy1 = wp.buy1;
+							doc3[d].trades.buy2 = wp.buy2;
+							doc3[d].trades.sell1 = wp.sell1;
+							doc3[d].trades.sell2 = wp.sell2;
+							
+	 collection.update({
+		'trades': doc3[d].trades
+	},{
+                            $set: {
+                                'trades': doc3[d].trades
+                            }
+                        }, {
+		
+	},
+	function(err, result) {
+		
+	});
 	}
  function subs(currencyPair){
 	 setTimeout(function(){
@@ -544,7 +574,7 @@ function doCollections(collections, balances){
         } else {
             //////console.log(balances.BTC);
 			
-			var btc = parseFloat(balances.BTC) / 40;
+			var btc = parseFloat(balances.BTC) / 16;
 			if (btc < 0.0001){
 				btc = 0.0001;
 			}
