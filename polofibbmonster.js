@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 function sortFunction(a,b){  
 	var dateA = (a.percent);
 	var dateB = (b.percent);
-	return dateA < dateB ? 1 : -1;  
+	return dateA > dateB ? 1 : -1;  
 }; 
 app.get('/', function(req, res) {
 		stoplimits = []
