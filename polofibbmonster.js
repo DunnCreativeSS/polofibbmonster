@@ -91,6 +91,7 @@ app.get('/', function(req, res) {
 						} else {
 							var btcbal = 0;
 							for (var bal in balances){
+								if (balances[bal] != 0){
 								var ticker = 'BTC_' + bal;
 								if (bestAsk[ticker]){
 								console.log(ticker);
@@ -98,6 +99,7 @@ app.get('/', function(req, res) {
 								console.log(bestAsk[ticker]);
 								console.log(balances[bal]);
 								btcbal += (parseFloat(bestAsk[ticker]) * parseFloat(balances[bal]));
+								}
 							}
 							}
 							btcbal += parseFloat(balances.BTC);
