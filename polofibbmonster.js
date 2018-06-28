@@ -326,9 +326,7 @@ poloniex.subscribe('ticker');
 			}
 	}
 	function updateStoplimits(wp, collection){
-		console.log('updatesl');
-		console.log(wp.buy1);
-		console.log(wp.pair);
+		
 		collection.find({
 
                 }, {
