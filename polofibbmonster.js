@@ -594,8 +594,8 @@ function doCollections(collections, balances){
                     for (var d in doc3) {
 						if (doc3[d].trades){
 							var ds = []
-						for (var d in data){
-							ds.push(d);
+						for (var da in data){
+							ds.push(da);
 							}
 							if (doc3[d].trades.currencyPair){
 							
@@ -663,7 +663,7 @@ godobuy = false;
 
 							}
         }
-            });
+            });	
     });
 }
 var dbo;
