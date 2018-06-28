@@ -349,7 +349,6 @@ MongoClient.connect(process.env.mongodb, function(err, db) {
 });
 }, 10000);
 function update2(wp, collection, callback){
-	if (collection){
 	 collection.update({
 		'trades.currencyPair': wp.currencyPair
 	}, {
@@ -371,7 +370,6 @@ function update2(wp, collection, callback){
 			callback(result.result);
 		}
 	});
-	}
  }
  function dobuy(d3d, cc, amount){
 	 update2(d3d, cc, function(data){
@@ -541,7 +539,8 @@ function doCollections(collections) {
                             //////console.log(doc3[d].trades.last);
 							//////console.log(doc3[d].trades);
 							doc3[d].trades.bought1 = true;
-							dobuy(doc3[d], collections[c]. amount);
+							console.log('dobuy: ' +  amount);
+							dobuy(doc3[d], collection. amount);
 
                         }
 						}
@@ -551,7 +550,8 @@ function doCollections(collections) {
 							//////console.log(doc3[d].trades.last);
 							//////console.log(doc3[d].trades);
 							doc3[d].trades.bought2 = true;
-							dobuy2(doc3[d], collections[c], amount);
+							console.log('dobuy2: ' +  amount);
+							dobuy2(doc3[d], collection, amount);
                             }
                         }
 						}
