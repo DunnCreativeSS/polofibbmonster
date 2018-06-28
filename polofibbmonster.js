@@ -410,7 +410,6 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 }, 10000);
 function update21(wp, collection, callback){
 	 collection.update({
-		'trades.currencyPair': wp.currencyPair
 	},{
                             $set: {
                                 'trades.bought1': true
@@ -421,7 +420,7 @@ function update21(wp, collection, callback){
 	function(err, result) {
 
 		if (err) console.log(err);
-		////////////////console.log(result.result);
+		console.log(result.result);
 		if (result.result.nModified == 0) {
 
 		} else {
@@ -431,7 +430,6 @@ function update21(wp, collection, callback){
  }
  function update22(wp, collection, callback){
 	collection.update({
-		'trades.currencyPair': wp.currencyPair
 	},{
                             $set: {
                                 'trades.bought2': true
@@ -442,7 +440,7 @@ function update21(wp, collection, callback){
 	function(err, result) {
 
 		if (err) console.log(err);
-		////////////////console.log(result.result);
+		console.log(result.result);
 		if (result.result.nModified == 0) {
 
 		} else {
@@ -615,7 +613,7 @@ function doCollections(collections, balances){
 							//cancel2(doc3[d], collections[c],  balances[doc3[d].trades.currencyPair.substr(doc3[d].trades.currencyPair.indexOf('_'), doc3[d].trades.currencyPair.length)]);
 						}
 						if (doc3[d].trades.bought1 == false){
-						//console.log(doc3[d].trades);
+						console.log(doc3[d].trades);
                         if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
                         var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
                             //////console.log(doc3[d].trades.last);
