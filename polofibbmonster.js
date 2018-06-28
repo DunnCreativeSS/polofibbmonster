@@ -102,7 +102,7 @@ app.get('/', function(req, res) {
 							var openorders = data;
 							stoplimits.sort(sortFunction);
 		////console.log(stoplimits);
-		res.send('<head><meta http-equiv="refresh" content="36"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1>'
+		res.send('<head><link rel="icon" href="https://polofibbmonster.herokuapp.com/favicon.ico?v=2" /><meta http-equiv="refresh" content="36"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1>'
 		+ 'BTC Balance: ' + balances.BTC + '<br><div style="display:none;" id="stoplimits">' + JSON.stringify(stoplimits) + '</div>'
 		+ '<div style="display:none;" id="orders">' + JSON.stringify(orders) + '</div>'
 		+ '<div style="display:none;" id="openorders">' + JSON.stringify(openorders) + '</div>'
