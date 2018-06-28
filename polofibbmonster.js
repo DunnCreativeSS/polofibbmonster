@@ -111,7 +111,7 @@ app.get('/', function(req, res) {
 									for (var a in data[d]){
 										data[d][a].pair = d;
 										orders.push(data[d][a]);
-										btcbal += parseFloat(data[d][a].amount) * (parseFloat(bestAsk[data[d][a].pair])
+										btcbal += (parseFloat(data[d][a].amount) * parseFloat(bestAsk[data[d][a].pair]))
 									}
 								}
 							}
