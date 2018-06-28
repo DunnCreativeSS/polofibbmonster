@@ -265,10 +265,17 @@ poloniex.subscribe('ticker');
 				'trades': wp
 			}, function(err, res) {
 				if (err) console.log(err);
+				
+			if (wp.currencyPair == "BTC_BCH"){
+				console.log(wp);
+			}
 			  console.log(res.result);
 			});
 		} else {
-			
+			if (wp.currencyPair == "BTC_BCH"){
+				console.log(wp);
+			}
+			console.log(wp);
 		console.log(result.result);
 		}
 	});
