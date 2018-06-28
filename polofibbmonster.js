@@ -349,6 +349,7 @@ MongoClient.connect(process.env.mongodb, function(err, db) {
 });
 }, 10000);
 function update2(wp, collection, callback){
+	if (collection){
 	 collection.update({
 		'trades.currencyPair': wp.currencyPair
 	}, {
@@ -370,6 +371,7 @@ function update2(wp, collection, callback){
 			callback(result.result);
 		}
 	});
+	}
  }
  function dobuy(d3d, cc, amount){
 	 update2(d3d, cc, function(data){
