@@ -222,12 +222,12 @@ poloniex.subscribe('ticker');
 				}
 				if (lesser[0] != undefined){
 					winners[p].buy1 = lesser[0]
-					winners[p].sl = lesser[0] * 0.93;
+					winners[p].sl = lesser[0] * 0.01; //0.93
 					
 				}
 				if (lesser[1] != undefined){
 					winners[p].buy2 = lesser[1]
-					winners[p].sl = lesser[1] * 0.93;
+					winners[p].sl = lesser[1] * 0.01; //.93
 					
 				}
 				
