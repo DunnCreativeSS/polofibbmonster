@@ -561,6 +561,7 @@ function doCollections(collections, balances){
     });
 }
 function collectionDo(collection, data, balances, btc){
+							var ds = []
 	collection.find({
 
                 }, {
@@ -571,7 +572,6 @@ function collectionDo(collection, data, balances, btc){
                 }).toArray(function(err, doc3) {
                     for (var d in doc3) {
 						if (doc3[d].trades){
-							var ds = []
 							for (var da in data){
 								if (data[da].length > 0){
 									for (var a in data[da]){
@@ -590,7 +590,8 @@ function collectionDo(collection, data, balances, btc){
 									console.log('bought1 true');
 								}
 								if (!ds.includes(doc3[d].trades.currencyPair)){
-									console.log('ds no include');
+									console.log('ds no include ' + doc3[d].trades.currencyPair);
+									console.log(ds);
 								}
 								if (doc3[d].trades.bought1 == true && !ds.includes(doc3[d].trades.currencyPair)){
 									doc3[d].trades.bought1 = false;
