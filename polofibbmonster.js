@@ -540,7 +540,7 @@ function doCollections(collections) {
 							//////console.log(doc3[d].trades);
 							doc3[d].trades.bought1 = true;
 							console.log('dobuy: ' +  amount);
-							dobuy(doc3[d], collection. amount);
+							dobuy(doc3[d], collection, amount);
 
                         }
 						}
