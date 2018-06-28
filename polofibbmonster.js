@@ -679,7 +679,7 @@ poloniex.on('message', (channelName, data, seq) => {
 		 }
 		 for (var d in data){
 		 if (data[d].type =='orderBookModify'){
-			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask'){
+			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'bid'){
 				 bestAsk[channelName] = data[d].data.rate;
 		
 				 update(data[d].data.rate, data[d].data.rate, channelName, collection)
