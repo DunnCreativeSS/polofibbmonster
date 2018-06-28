@@ -613,6 +613,8 @@ poloniex.on('message', (channelName, data, seq) => {
 			 //console.log(Object.keys(data[0].data.asks)[0]);
 			 //console.log(Object.keys(data[0].data.bids)[0]);
 			 bestAsk[channelName] = Object.keys(data[0].data.asks)[0];
+		console.log(channelName);
+			 console.log(bestAsk[channelName]);
 			 update(Object.keys(data[0].data.asks)[0], Object.keys(data[0].data.bids)[0], channelName, collection)
 		 //poloniex.unsubscribe(channelName);
 		 }
@@ -620,19 +622,21 @@ poloniex.on('message', (channelName, data, seq) => {
 		 if (data[d].type =='orderBookModify'){
 			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask'){
 				 bestAsk[channelName] = data[d].data.rate;
+		console.log(channelName);
+			 console.log(bestAsk[channelName]);
 				 update(data[d].data.rate, data[d].data.rate, channelName, collection)
 			 }
 		 }
 		 else if (data[d].type =='orderBookRemove'){
 			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask'){
 				 bestAsk[channelName] = data[d].data.rate;
+		console.log(channelName);
+			 console.log(bestAsk[channelName]);
 				 update(999999999999999, data[d].data.rate, channelName, collection)
 			 }
 		 }
 		 }
 		//	 }
-		console.log(channelName);
-			 console.log(bestAsk[channelName]);
 	}
  
   if (channelName === 'BTC_ETC') {
