@@ -398,6 +398,7 @@ function update2(wp, collection, callback){
 				} else {
 					callback(result.result);
 				}
+				godobuy = true;
 			});
 		});
 	});
@@ -431,12 +432,14 @@ function update2(wp, collection, callback){
 				} else {
 					callback(result.result);
 				}
+				godobuy = true;
 			});
 		});
 
 	});
 	});
  }
+ var godobuy = true;
 function cancel(d3d, cc, balance){
 	poloniex.cancelOrder(d3d.order1, function(data){
 		poloniex.sell(d3d.trades.currencyPair, d3d.trades.lowestAsk, balance, 0, 0, 0 , function (data3){
@@ -540,9 +543,12 @@ function doCollections(collections) {
                             //////console.log(doc3[d].trades.last);
 							//////console.log(doc3[d].trades);
 							doc3[d].trades.bought1 = true;
+							if (godobuy == true){
+								godobuy = false;
+
 							console.log('dobuy: ' +  amount);
 							dobuy(doc3[d], collection, amount);
-
+							}
                         }
 						}
                         if (doc3[d].trades.buy2) {
@@ -551,9 +557,12 @@ function doCollections(collections) {
 							//////console.log(doc3[d].trades.last);
 							//////console.log(doc3[d].trades);
 							doc3[d].trades.bought2 = true;
+														if (godobuy == true){
+godobuy = false;
 							console.log('dobuy2: ' +  amount);
 							dobuy2(doc3[d], collection, amount);
                             }
+							}
                         }
 						}
 						}
