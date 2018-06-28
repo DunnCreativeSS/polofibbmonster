@@ -430,12 +430,8 @@ function update21(wp, collection, callback){
  }
  function dobuy(d3d, cc, amount){
 	 update21(d3d, cc, function(data){
-		 setTimeout(function(){
-						console.log('4');
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data2){
 		console.log(data2);
-		 setTimeout(function(){
-						console.log('5');
 		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (data3){
 		console.log(data3);
 		
@@ -460,23 +456,18 @@ function update21(wp, collection, callback){
 					console.log(result.result);
 				}
 				godobuy = true;
-		}, 10000);
+	
 		});
 
 	});
-		 }, 10000);
 	});
  });
  }
 
  function dobuy2(d3d, cc, amount){
 	 update22(d3d, cc, function(data){
-		 setTimeout(function(){
-						console.log('6');
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data2){
 		console.log(data2);
-		setTimeout(function(){
-						console.log('7');
 		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (data3){
 			console.log(data3);
 			cc.update({
@@ -501,11 +492,9 @@ function update21(wp, collection, callback){
 				}
 				godobuy = true;
 			});
-		}, 10000);
 		});
 
 	});
-		 }, 10000);
 	});
  }
  var godobuy = true;
