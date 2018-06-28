@@ -451,34 +451,12 @@ function update21(wp, collection, callback){
  }
  function dobuy(d3d, cc, amount){
 	 update21(d3d, cc, function(data){
-	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data2){
+	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
+		 console.log(err)
 		console.log(data2);
-		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (data3){
+		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (err, data3){
 		console.log(data3);
-		
-			cc.update({
-				'trades.currencyPair': d3d.trades.currencyPair
-			}, {
-				'trades': d3d.trades
-			},
-			function(err, result) {
-
-				if (err) console.log(err);
-				////////////////console.log(result.result);
-				if (result.result.nModified == 0) {
-
-					cc.insertOne({
-						'trades': d3d.trades
-					}, function(err, res) {
-						if (err) console.log(err);
-					  console.log(res.result);
-					});
-				} else {
-					console.log(result.result);
-				}
-				godobuy = true;
-	
-		});
+		console.log(err);
 
 	});
 	});
@@ -487,32 +465,13 @@ function update21(wp, collection, callback){
 
  function dobuy2(d3d, cc, amount){
 	 update22(d3d, cc, function(data){
-	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data2){
+	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		console.log(data2);
-		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (data3){
+		console.log(err);
+		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (err, data3){
 			console.log(data3);
-			cc.update({
-				'trades.currencyPair': d3d.trades.currencyPair
-			}, {
-				'trades': d3d.trades
-			},
-			function(err, result) {
-
-				if (err) console.log(err);
-				////////////////console.log(result.result);
-				if (result.result.nModified == 0) {
-
-					cc.insertOne({
-						'trades': d3d.trades
-					}, function(err, res) {
-						if (err) console.log(err);
-					  console.log(res.result);
-					});
-				} else {
-					console.log(result.result);
-				}
-				godobuy = true;
-			});
+			console.log(err);
+			
 		});
 
 	});
@@ -627,6 +586,7 @@ function doCollections(collections, balances){
 								godobuy = false;
 
 							console.log('dobuy: ' +  amount);
+							console.log(doc3[d]);
 							dobuy(doc3[d], collection, amount);
 							}
                         }
