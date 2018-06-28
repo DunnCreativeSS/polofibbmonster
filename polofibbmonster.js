@@ -245,7 +245,11 @@ poloniex.subscribe('ticker');
 				winners[p].bought2 = false;
 				winners[p].cancelled = false;
 				if (winners[p].currencyPair.substr(0, winners[p].currencyPair.indexOf('_')) == 'BTC'){
-					subs(winners[p].currencyPair);
+					if (!winnas.includes(winners[p].currencyPair)){
+						winnas.push(winners[p].currencyPair);
+											subs(winners[p].currencyPair);
+
+					}
 					insert(winners[p], collection);
 							}
 				}
@@ -671,5 +675,8 @@ poloniex.on('error', (error) => {
 console.log(`An error has occured`);
  console.log(error);
 });
+
+setTimeout(function(){
  
 poloniex.openWebSocket({ version: 2 });
+}, 180000);
