@@ -408,7 +408,7 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
     });
 });
 }, 10000);
-function update21(wp, collection, callback){
+function update21(wp, collection){
 	 collection.update({
 	},{
                             $set: {
@@ -424,11 +424,11 @@ function update21(wp, collection, callback){
 		if (result.result.nModified == 0) {
 
 		} else {
-			callback(result.result);
+			console.log(result.result);
 		}
 	});
  }
- function update22(wp, collection, callback){
+ function update22(wp, collection){
 	collection.update({
 	},{
                             $set: {
@@ -444,12 +444,12 @@ function update21(wp, collection, callback){
 		if (result.result.nModified == 0) {
 
 		} else {
-			callback(result.result);
+			console.log(result.result);
 		}
 	});
  }
  function dobuy(d3d, cc, amount){
-	 update21(d3d, cc, function(data){});
+	 update21(d3d, cc);
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		 console.log(err)
 		console.log(data2);
@@ -462,7 +462,7 @@ function update21(wp, collection, callback){
  }
 
  function dobuy2(d3d, cc, amount){
-	 update22(d3d, cc, function(data){});
+	 update22(d3d, cc);
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		console.log(data2);
 		console.log(err);
