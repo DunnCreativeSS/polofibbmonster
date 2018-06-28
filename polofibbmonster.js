@@ -106,6 +106,7 @@ app.get('/', function(req, res) {
 							for (var d in data){
 								if (data[d].length > 0){
 									for (var a in data[d]){
+										data[d][a].pair = d;
 										orders.push(data[d][a]);
 									
 									}
