@@ -322,9 +322,9 @@ poloniex.subscribe('ticker');
  function insert(wp, collection){
 	 collection.update({
 		'trades.currencyPair': wp.currencyPair
-	}, { $set: {
+	},{
 		'trades': wp
-	}
+	
 	},
 	function(err, result) {
 
@@ -391,7 +391,7 @@ var collections = []
 setTimeout(function(){
 MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 	console.log(err);
-    var dbo = db.db('polomonster138-3')
+    var dbo = db.db('polomonster138-4')
 	var count = 0;
     dbo.listCollections().toArray(function(err, collInfos) {
         // collInfos is an array of collection info objects that look like:
@@ -654,7 +654,7 @@ godobuy = false;
 var dbo;
 				MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 					console.log(err);
-				dbo = db.db('polomonster138-3')
+				dbo = db.db('polomonster138-4')
 				////console.log('dbo');
 				
 				});
