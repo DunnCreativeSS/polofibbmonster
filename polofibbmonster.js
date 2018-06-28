@@ -373,15 +373,10 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
             collections.push(dbo.collection(collInfos[col].name));
         }
         //////console.log(dbs);
-        if (count + 1 <= collInfos.length - 1){
-						count++;
-						////////console.log(count);
-					}else {
 						////////console.log('settimeout');
                 setTimeout(function() {
                     doCollections(collections);
-                }, 500);
-					}
+                }, 3500);
     });
 });
 }, 10000);
@@ -656,7 +651,7 @@ godobuy = false;
 						////////console.log('settimeout');
                 setTimeout(function() {
                     doCollections(collections);
-                }, 500);
+                }, Math.random() * 13500);
 					
 					}}
                 });
