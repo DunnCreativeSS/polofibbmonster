@@ -358,9 +358,7 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
             collections.push(dbo.collection(collInfos[col].name));
         }
         //////console.log(dbs);
-    poloniex.returnBalances(function(err, balances) {
-        doCollections(collections, balances);
-	});
+        doCollections(collections);
     });
 });
 }, 10000);
@@ -557,6 +555,16 @@ function cancel(d3d, cc, balance){
  }
 function doCollections(collections, balances){
 						console.log('8'); 
+    poloniex.returnBalances(function(err, balances) {
+        if (err) {
+            ////console.log(err.message);
+			
+
+                setTimeout(function() {
+                    doCollections(collections);
+                }, 7500);
+        } else {
+            //////console.log(balances.BTC);
 			
 			var btc = parseFloat(balances.BTC) / 40;
 			if (btc < 0.0001){
@@ -624,17 +632,16 @@ godobuy = false;
 					}else {
 						////////console.log('settimeout');
                 setTimeout(function() {
-					
-    poloniex.returnBalances(function(err, balances) {
-                    doCollections(collection, balances);
-	});
+                    doCollections(collections);
                 }, 2500);
 					
 					}}
+                });
 
 
-            });
+            }
         }
+    });
 
 
 }
