@@ -349,12 +349,35 @@ MongoClient.connect(process.env.mongodb, function(err, db) {
     });
 });
 }, 10000);
-function update2(wp, collection, callback){
+function update21(wp, collection, callback){
 	 collection.update({
 		'trades.currencyPair': wp.currencyPair
-	}, {
-		'trades': wp
-	},
+	},  $set: {
+                                'trades.bought1': true
+                            },
+	function(err, result) {
+
+		if (err) console.log(err);
+		////////////////console.log(result.result);
+		if (result.result.nModified == 0) {
+
+			collection.insertOne({
+				'trades': wp
+			}, function(err, res) {
+				if (err) console.log(err);
+			  callback(res.result);
+			});
+		} else {
+			callback(result.result);
+		}
+	});
+ }
+ function update22(wp, collection, callback){
+	 collection.update({
+		'trades.currencyPair': wp.currencyPair
+	},  $set: {
+                                'trades.bought2': true
+                            },
 	function(err, result) {
 
 		if (err) console.log(err);
@@ -373,9 +396,11 @@ function update2(wp, collection, callback){
 	});
  }
  function dobuy(d3d, cc, amount){
-	 update2(d3d, cc, function(data){
+	 update21(d3d, cc, function(data){
+		 setTimeout(function(){
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data2){
 		console.log(data2);
+		 setTimeout(function(){
 		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (data3){
 		console.log(data3);
 		
@@ -400,16 +425,21 @@ function update2(wp, collection, callback){
 					console.log(result.result);
 				}
 				godobuy = true;
-			});
+		}, 10000);
 		});
+
 	});
+		 }, 10000);
 	});
+ });
  }
 
  function dobuy2(d3d, cc, amount){
-	 update2(d3d, cc, function(data){
+	 update22(d3d, cc, function(data){
+		 setTimeout(function(){
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data2){
 		console.log(data2);
+		setTimeout(function(){
 		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (data3){
 			console.log(data3);
 			cc.update({
@@ -434,9 +464,11 @@ function update2(wp, collection, callback){
 				}
 				godobuy = true;
 			});
+		}, 10000);
 		});
 
 	});
+		 }, 10000);
 	});
  }
  var godobuy = true;
