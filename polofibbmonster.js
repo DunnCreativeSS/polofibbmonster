@@ -114,6 +114,8 @@ app.get('/', function(req, res) {
 							var tsYesterday = ts - (24 * 3600) - 1000;
 							var trades = []
 							poloniex.returnMyTradeHistory('all', tsYesterday, ts, 5000, function(err, data) {
+								console.log(err);
+								console.log(data);
 							var totals = []
 							for (var d in data){
 								totals[d] = 0
