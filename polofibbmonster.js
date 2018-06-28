@@ -3,7 +3,7 @@ const tw = require('./trendyways.js');
 var MongoClient = require('mongodb').MongoClient;
 let poloniex;
 
-poloniex = new Poloniex('UKPBKVD4-YM7NGFH4-E5XR83C6-NOULGVC0	', process.env.apikey , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
+poloniex = new Poloniex('UKPBKVD4-YM7NGFH4-E5XR83C6-NOULGVC0', process.env.apikey , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 
 const express = require('express');
 var favicon = require('serve-favicon')
@@ -721,4 +721,4 @@ console.log(`An error has occured`);
 setTimeout(function(){
  
 poloniex.openWebSocket({ version: 2 });
-}, 180000);
+},2000);
