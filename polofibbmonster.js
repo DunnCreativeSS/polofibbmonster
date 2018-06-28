@@ -573,7 +573,7 @@ function doCollections(collections, balances){
 							
             for (var c in collections) {
                 var collection = collections[c];
-                collectionDo(collection);
+                collectionDo(collection, data, balances, btc);
 
 
 
@@ -582,7 +582,7 @@ function doCollections(collections, balances){
             });	
     });
 }
-function collectionDo(collection){
+function collectionDo(collection, data, balances, btc){
 	collection.find({
 
                 }, {
