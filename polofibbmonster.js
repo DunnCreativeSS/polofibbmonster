@@ -571,11 +571,20 @@ function collectionDo(collection, data, balances, btc){
                     for (var d in doc3) {
 						if (doc3[d].trades){
 							var ds = []
-						for (var da in data){
-							ds.push(da);
+							for (var d in data){
+								if (data[d].length > 0){
+									for (var a in data[d]){
+										data[d][a].pair = d;
+										
+										ds.push(data[d][a].pair);
+										//trades.push(data[d][a]);
+									
+									}
+								}
 							}
-							console.log('ds: ');
-							console.log(ds);
+							}
+							//console.log('ds: ');
+							//console.log(ds);
 							if (doc3[d].trades.currencyPair){
 								if (doc3[d].trades.bought1 == true){
 									console.log('bought1 true');
