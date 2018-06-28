@@ -89,8 +89,7 @@ app.get('/', function(req, res) {
 							////console.log(err.message);
 							res.send('temporary error, retry ' + err.message);
 						} else {
-							
-							btcbal = 0;
+							var btcbal = 0;
 							var orders = []
 							poloniex.returnOpenOrders('all', function(err, data) {
 							for (var d in data){
