@@ -501,7 +501,11 @@ function doCollections(collections) {
                 }, 7500);
         } else {
             ////console.log(balances.BTC);
-			var btc = parseFloat(balances.BTC) / 8;
+			
+			var btc = parseFloat(balances.BTC) / 40;
+			if (btc < 0.0001){
+				btc = 0.0001;
+			}
 			var count = 0;
             for (var c in collections) {
                 var collection = collections[c];
