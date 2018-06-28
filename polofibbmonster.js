@@ -574,13 +574,9 @@ function collectionDo(collection, data, balances, btc){
 						if (doc3[d].trades){
 							for (var da in data){
 								if (data[da].length > 0){
-									for (var a in data[da]){
-										data[da][a].pair = d;
-										
-										ds.push(data[da][a].pair);
+										ds.push(da);
 										//trades.push(data[d][a]);
 									
-									}
 								}
 							}
 							//console.log('ds: ');
