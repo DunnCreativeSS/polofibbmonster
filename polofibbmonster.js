@@ -94,6 +94,7 @@ app.get('/', function(req, res) {
 							////console.log(err.message);
 							res.send('temporary error, retry ' + err.message);
 						} else {
+							var totals = []
 							var btcbal = 0;
 							var orders = []
 							poloniex.returnOpenOrders('all', function(err, data) {
@@ -116,7 +117,6 @@ app.get('/', function(req, res) {
 							poloniex.returnMyTradeHistory('all', tsYesterday, ts, 5000, function(err, data) {
 								console.log(err);
 								console.log(data);
-							var totals = []
 							for (var d in data){
 								totals[d] = 0
 								if (data[d].length > 0){
@@ -127,7 +127,7 @@ app.get('/', function(req, res) {
 										}else {
 											totals[d] = totals[d] - parseFloat(data[d][a].total);
 										}
-										//trades.push(data[d][a]);
+										trades.push(data[d][a]);
 									
 									}
 								}
