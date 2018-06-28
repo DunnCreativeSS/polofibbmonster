@@ -523,6 +523,7 @@ function doCollections(collections) {
 
                     for (var d in doc3) {
 						if (doc3[d].trades){
+							if (doc3[d].trades.currencyPair){
 						if (doc3[d].trades.currencyPair.substr(0, doc3[d].trades.currencyPair.indexOf('_')) == "BTC"){
 						var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
                          //console.log(amount);
@@ -557,6 +558,7 @@ function doCollections(collections) {
 						}
 						}
                     }
+					
 					if (count + 1 <= collections.length - 1){
 						count++;
 						////////console.log(count);
@@ -565,7 +567,8 @@ function doCollections(collections) {
                 setTimeout(function() {
                     doCollections(collections);
                 }, 500);
-					}
+					
+					}}
                 });
 
 
