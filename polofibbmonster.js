@@ -245,15 +245,18 @@ poloniex.subscribe('ticker');
 				winners[p].bought2 = false;
 				winners[p].cancelled = false;
 				if (winners[p].currencyPair.substr(0, winners[p].currencyPair.indexOf('_')) == 'BTC'){
-					
-					poloniex.subscribe(winners[p].currencyPair);
+					subs(winners[p].currencyPair);
 					insert(winners[p], collection);
 							}
 				}
 							
 			}
 	}
- 
+ function subs(currencyPair){
+	 setTimeout(function(){
+					poloniex.subscribe(currencyPair);
+					}, Math.random() * 10000);
+ }
  
  function insert(wp, collection){
 	 collection.update({
