@@ -10,7 +10,7 @@ const express = require('express');
 var startDate = new Date('2018/06/28 19:20')
 var favicon = require('serve-favicon')
 var path = require('path')
- var startBtc = 0.0077605141763145;
+ var startBtc = 0.007759151314717699;
 var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
