@@ -408,7 +408,8 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
     });
 });
 }, 10000);
-function update21(wp, collection){
+function update21(wp){
+	var collection = dbo.collection(wp.trades.currencyPair);
 	console.log('wah wah ' + wp.trades.currencyPair);
 	collection.update({
 		"trades.currencyPair": wp.trades.currecncyPair
@@ -420,10 +421,14 @@ function update21(wp, collection){
 	function(err, result) {
 	   console.log(err);
 		console.log(result.result);
+		
+	//godobuy = true;
+							
 
 	});
  }
- function update22(wp, collection){
+ function update22(wp){
+	var collection = dbo.collection(wp.trades.currencyPair);
 	collection.update({
 		"trades.currencyPair": wp.trades.currecncyPair
 	}, {
@@ -434,11 +439,13 @@ function update21(wp, collection){
 	function(err, result) {
 	   console.log(err);
 		console.log(result.result);
+	//godobuy = true;
+							
 
 	});
  }
  function dobuy(d3d, cc, amount){
-	 update21(d3d, cc);
+	 update21(d3d);
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		 console.log(err)
 		console.log(data2);
@@ -451,7 +458,7 @@ function update21(wp, collection){
  }
 
  function dobuy2(d3d, cc, amount){
-	 update22(d3d, cc);
+	 update22(d3d);
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		console.log(data2);
 		console.log(err);
@@ -541,8 +548,6 @@ function cancel(d3d, cc, balance){
 	});
  }
 function doCollections(collections, balances){
-	
-							
 							
 							
 						//console.log('8'); 
