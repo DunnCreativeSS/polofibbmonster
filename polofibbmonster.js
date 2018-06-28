@@ -579,6 +579,8 @@ function doCollections(collections, balances){
 				btc = 0.0001;
 			}
 			var count = 0;
+				poloniex.returnOpenOrders('all', function(err, data) {
+							
             for (var c in collections) {
                 var collection = collections[c];
                 collection.find({
@@ -589,8 +591,6 @@ function doCollections(collections, balances){
                     _id: -1
 
                 }).toArray(function(err, doc3) {
-				poloniex.returnOpenOrders('all', function(err, data) {
-							
                     for (var d in doc3) {
 						if (doc3[d].trades){
 							var ds = []
@@ -661,8 +661,8 @@ godobuy = false;
 
 
 
-							});
-            }
+							}
+            });
         }
     });
 }
