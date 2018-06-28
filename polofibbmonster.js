@@ -374,7 +374,7 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
         }
         //////console.log(dbs);
 						////////console.log('settimeout');
-                setTimeout(function() {
+                setInterval(function() {
                     doCollections(collections);
                 }, 3500);
     });
@@ -649,9 +649,7 @@ godobuy = false;
 						////////console.log(count);
 					}else {
 						////////console.log('settimeout');
-                setTimeout(function() {
-                    doCollections(collections);
-                }, Math.random() * 13500);
+               
 					
 					}}
                 });
