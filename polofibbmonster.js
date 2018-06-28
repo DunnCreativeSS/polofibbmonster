@@ -96,13 +96,15 @@ app.get('/', function(req, res) {
 								if (data[d].length > 0){
 									for (var a in data[d]){
 										data[d][a].pair = d;
+										data[d][a].currentAsk = bestAsk[data[d][a].pair];
+										data[d][a].percent = (parseFloat(doc3[d].trades.lowestAsk) / parseFloat(doc3[d].trades.buy2));
 										orders.push(data[d][a]);
 										btcbal += (parseFloat(data[d][a].amount) * parseFloat(bestAsk[data[d][a].pair]))
 									}
 								}
 							}
 							btcbal += parseFloat(balances.BTC);
-							
+							orders.sort(sortFunction);
 							var percent =  (100 * (-1 * (1 - (btcbal / startBtc)))).toFixed(4);
 					var diff2 = Math.abs(new Date() - startDate);
 					var minutes = Math.floor((diff2/1000)/60);
