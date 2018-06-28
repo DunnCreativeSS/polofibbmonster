@@ -409,9 +409,9 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 });
 }, 10000);
 function update21(wp, collection){
-	console.log('wah wah ' + wp.currencyPair);
+	console.log('wah wah ' + wp.trades.currencyPair);
 	collection.update({
-		"trades.currencyPair": wp.currecncyPair
+		"trades.currencyPair": wp.trades.currecncyPair
 	}, {
 		$set: {
 			"trades.bought1": true
@@ -425,7 +425,7 @@ function update21(wp, collection){
  }
  function update22(wp, collection){
 	collection.update({
-		"trades.currencyPair": wp.currecncyPair
+		"trades.currencyPair": wp.trades.currecncyPair
 	}, {
 		$set: {
 			"trades.bought2": true
