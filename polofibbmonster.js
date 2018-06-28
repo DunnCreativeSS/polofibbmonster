@@ -326,6 +326,9 @@ poloniex.subscribe('ticker');
 			}
 	}
 	function updateStoplimits(wp, collection){
+		console.log('updatesl');
+		console.log(wp.buy1);
+		console.log(wp.pair);
 		collection.find({
 
                 }, {
@@ -342,7 +345,6 @@ poloniex.subscribe('ticker');
 							doc3[d].trades.sell2 = wp.sell2;
 							
 	 collection.update({
-		'trades': doc3[d].trades
 	},{
                             $set: {
                                 'trades': doc3[d].trades
@@ -351,7 +353,7 @@ poloniex.subscribe('ticker');
 		
 	},
 	function(err, result) {
-		
+		//console.log(result.result);
 	});
 	}
 					}
@@ -765,7 +767,7 @@ poloniex.on('message', (channelName, data, seq) => {
 	
 		*/
 		////////console.log(vols.length);
-		if (vols.length > 30 && msgcount > 50){ // prod 50
+		if (vols.length > 20 && msgcount > 30){ // prod 50
 		msgcount = 0;
 		doVols = true;
 			doVol();
