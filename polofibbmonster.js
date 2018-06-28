@@ -3,7 +3,7 @@ const tw = require('./trendyways.js');
 
 var MongoClient = require('mongodb').MongoClient;
 let poloniex;
-poloniex = new Poloniex('HZ87QQM5-9VOBUC1E-Z3P28SIP-VEMV6LRE', '7cad99b57b30ce34bebf4be1c7c4c70adc415ae45049033f9702d8189c77e6489857f8a1001136df385b5e6550896d5a6ef5c949e99cc9626eed1c0c93840b79', { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
+poloniex = new Poloniex('HZ87QQM5-9VOBUC1E-Z3P28SIP-VEMV6LRE', process.env.apikey, { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 
 const express = require('express');
 const app = express();
