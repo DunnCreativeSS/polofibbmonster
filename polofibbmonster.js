@@ -612,8 +612,10 @@ function doCollections(collections, balances){
 						if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.sl && doc3[d].trades.bought2 == true && doc3[d].trades.cancelled == false){
 							//cancel2(doc3[d], collections[c],  balances[doc3[d].trades.currencyPair.substr(doc3[d].trades.currencyPair.indexOf('_'), doc3[d].trades.currencyPair.length)]);
 						}
+						
+						console.log(doc3[d].trades.currencyPair);
+						console.log(doc3[d].trades.bought1);
 						if (doc3[d].trades.bought1 == false){
-						console.log(doc3[d].trades);
                         if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
                         var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
                             //////console.log(doc3[d].trades.last);
