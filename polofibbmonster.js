@@ -390,7 +390,7 @@ var collections = []
 setTimeout(function(){
 MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 	console.log(err);
-    var dbo = db.db('polomonster138')
+    var dbo = db.db('polomonster138-2')
 	var count = 0;
     dbo.listCollections().toArray(function(err, collInfos) {
         // collInfos is an array of collection info objects that look like:
@@ -451,7 +451,7 @@ function update21(wp, collection, callback){
 	});
  }
  function dobuy(d3d, cc, amount){
-	 update21(d3d, cc, function(data){
+	 update21(d3d, cc, function(data){});
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		 console.log(err)
 		console.log(data2);
@@ -460,12 +460,11 @@ function update21(wp, collection, callback){
 		console.log(err);
 
 	});
-	});
  });
  }
 
  function dobuy2(d3d, cc, amount){
-	 update22(d3d, cc, function(data){
+	 update22(d3d, cc, function(data){});
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		console.log(data2);
 		console.log(err);
@@ -473,7 +472,6 @@ function update21(wp, collection, callback){
 			console.log(data3);
 			console.log(err);
 			
-		});
 
 	});
 	});
@@ -669,7 +667,7 @@ godobuy = false;
 var dbo;
 				MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 					console.log(err);
-				dbo = db.db('polomonster138')
+				dbo = db.db('polomonster138-2')
 				////console.log('dbo');
 				
 				});
