@@ -100,7 +100,7 @@ app.get('/', function(req, res) {
 								btcbal += (parseFloat(bestAsk[ticker]) * parseFloat(balances[bal]));
 							}
 							}
-							btcbal += balances.BTC;
+							btcbal += parseFloat(balances.BTC);
 							var orders = []
 							poloniex.returnOpenOrders('all', function(err, data) {
 							for (var d in data){
