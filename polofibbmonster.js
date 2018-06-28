@@ -21,8 +21,8 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 		var orders = []
 		var count = 0;
 function sortFunction(a,b){  
-	var dateA = new Date(a.percent).getTime();
-	var dateB = new Date(b.percent).getTime();
+	var dateA = (a.percent);
+	var dateB = (b.percent);
 	return dateA < dateB ? 1 : -1;  
 }; 
 app.get('/', function(req, res) {
