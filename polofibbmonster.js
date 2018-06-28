@@ -117,20 +117,22 @@ app.get('/', function(req, res) {
 							poloniex.returnMyTradeHistory('all', tsYesterday, ts, 5000, function(err, data) {
 								console.log(err);
 								//console.log(data);
+								var ccc = 0;
 							for (var d in data){
-								totals[d] = 0
+							totals,push({'pair': d, 'total:' 0});
 								if (data[d].length > 0){
 									for (var a in data[d]){
 										data[d][a].pair = d;
 										if (data[d][a].type == 'sell'){
-											totals[d] += parseFloat(data[d][a].total);
+											totals[ccc].total += parseFloat(data[d][a].total);
 										}else {
-											totals[d] = totals[d] - parseFloat(data[d][a].total);
+											totals[ccc].total = totals[ccc].total - parseFloat(data[d][a].total);
 										}
 										trades.push(data[d][a]);
 									
 									}
 								}
+								ccc++;
 							}
 							var percent =  (100 * (-1 * (1 - (btcbal / startBtc)))).toFixed(4);
 					var diff2 = Math.abs(new Date() - startDate);
