@@ -320,16 +320,8 @@ poloniex.subscribe('ticker');
  }
  
  function insert(wp, collection){
-	 collection.update({
-		'trades.currencyPair': wp.currencyPair
-	}, {
-		'trades': wp
-	},
-	function(err, result) {
-
-		if (err) console.log(err);
-		if (result.result.nModified == 0) {
-			
+	 	
+	 console.log('insert');
 			collection.insertOne({
 				'trades': wp
 			}, function(err, res) {
@@ -340,16 +332,10 @@ poloniex.subscribe('ticker');
 			}
 			  ////console.log(res.result);
 			}); 
-		} else {
-			if (wp.currencyPair == "BTC_BCH"){
-				////console.log(wp);
-			}
-			////console.log(wp);
-		////console.log(result.result);
-		}
-	});
+		
  }
  function update(ask, bid, currencyPair, collection){
+	 console.log('update');
 	 collection.update({
 		'trades.currencyPair': currencyPair
 	},{
@@ -620,7 +606,7 @@ godobuy = false;
 								collection.update({
 								}, {
 									$set: {
-										"trades.bought2": true
+										"trades.bought2f": true
 									}
 								}, { multi: true },
 								function(err, result) {
