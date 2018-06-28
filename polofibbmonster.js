@@ -113,12 +113,18 @@ app.get('/', function(req, res) {
 							var ts = Math.round(new Date().getTime() / 1000) - 1000;
 							var tsYesterday = ts - (24 * 3600) - 1000;
 							var trades = []
-							poloniex.returnMyTradeHistory('all', tsYesterday, ts, null, function(err, data) {
-							
+							poloniex.returnMyTradeHistory('all', tsYesterday, ts, 5000, function(err, data) {
+							var totals = []
 							for (var d in data){
+								totals[d] = 0
 								if (data[d].length > 0){
 									for (var a in data[d]){
 										data[d][a].pair = d;
+										if (data[d][a].type == 'sell'){
+											totals[d] += data[d][a].total;
+										}else {
+											totals[d] = totals[d] - data[d][a].total;
+										}
 										trades.push(data[d][a]);
 									
 									}
@@ -137,6 +143,7 @@ app.get('/', function(req, res) {
 		+ 'minutes: ' + minutes + '<br>'
 		+ 'hours: ' + hours + '<br>'
 		+ 'percent: ' + percent + '%<br>'
+		+ 'totals: ' + totals.toString() + '%<br>'
 		+ '<h1>percent/hr: ' + percentHr + '%</h1><br>'
 		+ '<div style="display:none;" id="stoplimits">' + JSON.stringify(stoplimits) + '</div>'
 		+ '<div style="display:none;" id="orders">' + JSON.stringify(orders) + '</div>'
