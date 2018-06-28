@@ -65,6 +65,7 @@ app.get('/', function(req, res) {
 						if (doc3[d].order2){
 						poloniex.returnOrderTrades(doc3[d].order2, function(data){
 							orders.push(data);
+							console.log(data);
 						});
 						}
 						//////console.log(doc3[d].trades);
@@ -99,6 +100,7 @@ app.get('/', function(req, res) {
 						} else {
 							//////console.log(balances.BTC);
 						poloniex.returnOpenOrders(doc3[d].currencyPair, function(data){
+							console.log(data);
 							var openorders = data;
 							stoplimits.sort(sortFunction);
 		//////console.log(stoplimits);
