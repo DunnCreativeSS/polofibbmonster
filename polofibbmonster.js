@@ -649,15 +649,15 @@ poloniex.on('message', (channelName, data, seq) => {
 });
  
 poloniex.on('open', () => {
-  //console.log(`Poloniex WebSocket connection open`);
+  console.log(`Poloniex WebSocket connection open`);
 });
  
 poloniex.on('close', (reason, details) => {
- //console.log(`Poloniex WebSocket connection disconnected`);
+ console.log(`Poloniex WebSocket connection disconnected`);
 });
  
 poloniex.on('error', (error) => {
- //console.log(`An error has occured`);
+console.log(`An error has occured`);
  console.log(error);
 });
  
