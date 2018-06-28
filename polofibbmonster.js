@@ -2,10 +2,13 @@ const Poloniex = require('poloniex-api-node');
 const tw = require('./trendyways.js');
 var MongoClient = require('mongodb').MongoClient;
 let poloniex;
+
 poloniex = new Poloniex('HZ87QQM5-9VOBUC1E-Z3P28SIP-VEMV6LRE', process.env.apikey , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 
 const express = require('express');
 const app = express();
+const favicon = require('express-favicon');
+app.use(favicon(__dirname + '/public/favicon.png'));
 var dorefresh = false;
 var request = require("request")
 var bodyParser = require('body-parser')
