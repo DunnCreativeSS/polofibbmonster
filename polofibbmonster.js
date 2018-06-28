@@ -424,12 +424,6 @@ function update21(wp, collection, callback){
 		////////////////console.log(result.result);
 		if (result.result.nModified == 0) {
 
-			collection.insertOne({
-				'trades': wp
-			}, function(err, res) {
-				if (err) console.log(err);
-			  callback(res.result);
-			});
 		} else {
 			callback(result.result);
 		}
@@ -451,12 +445,6 @@ function update21(wp, collection, callback){
 		////////////////console.log(result.result);
 		if (result.result.nModified == 0) {
 
-			collection.insertOne({
-				'trades': wp
-			}, function(err, res) {
-				if (err) console.log(err);
-			  callback(res.result);
-			});
 		} else {
 			callback(result.result);
 		}
@@ -547,7 +535,33 @@ function cancel(d3d, cc, balance){
 	});
 	});
  }
+  function updaterenew(wp, collection, callback){
+	collection.update({
+		'trades.currencyPair': wp.currencyPair
+	},{
+                            $set: {
+                                'trades.bought1': false,
+								'trades.bought2': false
+                            }
+                        }, {
+		
+	},
+	function(err, result) {
+
+		if (err) console.log(err);
+		////////////////console.log(result.result);
+		if (result.result.nModified == 0) {
+
+		} else {
+			callback(result.result);
+		}
+	});
+ }
 function doCollections(collections, balances){
+	
+							
+							
+							
 						//console.log('8'); 
     poloniex.returnBalances(function(err, balances) {
         if (err) {
@@ -575,9 +589,23 @@ function doCollections(collections, balances){
                     _id: -1
 
                 }).toArray(function(err, doc3) {
-
+				poloniex.returnOpenOrders('all', function(err, data) {
+							
                     for (var d in doc3) {
 						if (doc3[d].trades){
+							var ds = []
+						for (var d in data){
+							ds.push(d);
+							}
+							
+								if (doc3[d].trades.bought1 == true && !ds.includes(doc3[d].trades.currencyPair)){
+									doc3[d].trades.bought1 = false;
+									doc3[d].trades.bought2 = false;
+									updaterenew(doc3[d], collection, function(data2){
+										
+									});
+								}
+							
 							if (doc3[d].trades.currencyPair){
 						if (doc3[d].trades.currencyPair.substr(0, doc3[d].trades.currencyPair.indexOf('_')) == "BTC"){
 						var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
@@ -632,11 +660,11 @@ godobuy = false;
                 });
 
 
+
+							});
             }
         }
     });
-
-
 }
 var dbo;
 				MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
