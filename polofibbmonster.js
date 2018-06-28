@@ -305,7 +305,7 @@ poloniex.subscribe('ticker');
 						winnas.push(winners[p].currencyPair);
 											subs(winners[p].currencyPair);
 
-					insert(winners[p], collection);
+					//insert(winners[p], collection);
 					}
 							}
 				}
