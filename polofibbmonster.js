@@ -579,7 +579,7 @@ function collectionDo(collection, data, balances, btc){
 						}
 						
 						//console.log(doc3[d].trades.currencyPair);
-						//console.log(doc3[d].trades.bought1);
+						console.log(doc3[d].trades);
 						if (doc3[d].trades.bought1 == false){
                         if (parseFloat(doc3[d].trades.lowestAsk)  * .9975 <= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
                         var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
@@ -594,7 +594,7 @@ function collectionDo(collection, data, balances, btc){
 							collection.update({
 								}, {
 									$set: {
-										"trades": doc3[d]
+										"trades": doc3[d].trades
 									}
 								}, { multi: true },
 								function(err, result) {
@@ -620,7 +620,7 @@ godobuy = false;
 								collection.update({
 								}, {
 									$set: {
-										"trades": doc3[d]
+										"trades": doc3[d].trades
 									}
 								}, { multi: true },
 								function(err, result) {
