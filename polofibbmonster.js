@@ -597,6 +597,7 @@ function doCollections(collections, balances){
 						for (var d in data){
 							ds.push(d);
 							}
+							if (doc3[d].trades.currencyPair){
 							
 								if (doc3[d].trades.bought1 == true && !ds.includes(doc3[d].trades.currencyPair)){
 									doc3[d].trades.bought1 = false;
@@ -606,7 +607,6 @@ function doCollections(collections, balances){
 									});
 								}
 							
-							if (doc3[d].trades.currencyPair){
 						if (doc3[d].trades.currencyPair.substr(0, doc3[d].trades.currencyPair.indexOf('_')) == "BTC"){
 						var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
                          //console.log(amount);
