@@ -144,7 +144,8 @@ app.get('/', function(req, res) {
 		//////console.log(stoplimits);
 		console.log((totals).toString());
 		res.send('<head><link rel="icon" href="https://polofibbmonster.herokuapp.com/favicon.ico?v=2" /><meta http-equiv="refresh" content="36"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1>'
-		+ 'BTC Balance (including open orders if sold at current ask): ' + btcbal + '<br>'
+		+ 'current time: ' + new Date()
+		+ '<br>BTC Balance (including open orders if sold at current ask): ' + btcbal + '<br>'
 		+ 'minutes: ' + minutes + '<br>'
 		+ 'hours: ' + hours + '<br>'
 		+ 'percent: ' + percent + '%<br>'
@@ -571,12 +572,12 @@ function collectionDo(collection, data, balances, btc){
                     for (var d in doc3) {
 						if (doc3[d].trades){
 							var ds = []
-							for (var d in data){
-								if (data[d].length > 0){
-									for (var a in data[d]){
-										data[d][a].pair = d;
+							for (var da in data){
+								if (data[da].length > 0){
+									for (var a in data[da]){
+										data[da][a].pair = d;
 										
-										ds.push(data[d][a].pair);
+										ds.push(data[da][a].pair);
 										//trades.push(data[d][a]);
 									
 									}
