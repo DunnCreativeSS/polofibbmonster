@@ -37,8 +37,8 @@ function sortFunction(a,b){
 	var dateB = (b.percent);
 	return dateA > dateB ? 1 : -1;  
 }; 
-app.get('/', function(req, res) {
-		stoplimits = []
+function doget(req, res){
+	stoplimits = []
 		orders = []
 		count = 0;
 		dbs = []
@@ -170,6 +170,16 @@ app.get('/', function(req, res) {
 		
 		}
 	});
+}
+app.get('/', function(req, res) {
+	try {
+		doget(req, res);
+	} catch (err){
+		console.log(err);
+		setTimeout(function(){
+		doget(req, res);
+		}, 20000);
+	}
 });
 
             app.listen(process.env.PORT || 8080, function() {});
