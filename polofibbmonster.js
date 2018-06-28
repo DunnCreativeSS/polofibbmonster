@@ -97,7 +97,7 @@ app.get('/', function(req, res) {
 									for (var a in data[d]){
 										data[d][a].pair = d;
 										data[d][a].currentAsk = bestAsk[data[d][a].pair];
-										data[d][a].percent = (parseFloat(doc3[d].trades.lowestAsk) / parseFloat(doc3[d].trades.buy2));
+										data[d][a].percent = (parseFloat(data[d][a].currentAsk) / parseFloat(data[d][a].rate));
 										orders.push(data[d][a]);
 										btcbal += (parseFloat(data[d][a].amount) * parseFloat(bestAsk[data[d][a].pair]))
 									}
