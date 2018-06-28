@@ -591,11 +591,11 @@ function collectionDo(collection, data, balances, btc){
 
 							console.log('dobuy: ' +  amount);
 							console.log(doc3[d]);
-							
+							console.log(collection.getName());
 							collection.update({
 								}, {
 									$set: {
-										"trades.bought1": true
+										"trades": doc3[d]
 									}
 								}, { multi: true },
 								function(err, result) {
@@ -621,7 +621,7 @@ godobuy = false;
 								collection.update({
 								}, {
 									$set: {
-										"trades.bought2f": true
+										"trades": doc3[d]
 									}
 								}, { multi: true },
 								function(err, result) {
