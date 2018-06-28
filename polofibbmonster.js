@@ -6,10 +6,10 @@ let poloniex;
 poloniex = new Poloniex('UKPBKVD4-YM7NGFH4-E5XR83C6-NOULGVC0', process.env.apikey , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 var mongodb = "";
 const express = require('express');
-var startDate = new Date('2018/06/28 04:22')
+var startDate = new Date('2018/06/29 19:20')
 var favicon = require('serve-favicon')
 var path = require('path')
- var startBtc = 0.0074038148007152;
+ var startBtc = 0.007773021911070601;
 var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
