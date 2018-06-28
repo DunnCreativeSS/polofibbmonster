@@ -409,39 +409,32 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 });
 }, 10000);
 function update21(wp, collection){
-	 collection.update({
-	},{
-                            $set: {
-                                'trades.bought1': true
-                            }
-                        }, {multi: true},
-	function(err, result) {
-
-		if (err) console.log(err);
-		console.log(result.result);
-		if (result.result.nModified == 0) {
-
-		} else {
-			console.log(result.result);
+	console.log('wah wah ' + wp.currencyPair);
+	collection.update({
+		"trades.currencyPair": wp.currecncyPair
+	}, {
+		$set: {
+			"trades.bought1": true
 		}
+	},
+	function(err, result) {
+	   console.log(err);
+		console.log(result.result);
+
 	});
  }
  function update22(wp, collection){
 	collection.update({
-	},{
-                            $set: {
-                                'trades.bought2': true
-                            }
-                        }, {multi: true},
-	function(err, result) {
-
-		if (err) console.log(err);
-		console.log(result.result);
-		if (result.result.nModified == 0) {
-
-		} else {
-			console.log(result.result);
+		"trades.currencyPair": wp.currecncyPair
+	}, {
+		$set: {
+			"trades.bought2": true
 		}
+	},
+	function(err, result) {
+	   console.log(err);
+		console.log(result.result);
+
 	});
  }
  function dobuy(d3d, cc, amount){
@@ -620,7 +613,7 @@ function collectionDo(collection, data, balances, btc){
 						//console.log(doc3[d].trades.currencyPair);
 						//console.log(doc3[d].trades.bought1);
 						if (doc3[d].trades.bought1 == false){
-                        if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
+                        if (parseFloat(doc3[d].trades.lowestAsk)  * .9975 <= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
                         var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
                             //////console.log(doc3[d].trades.last);
 							//////console.log(doc3[d].trades);
