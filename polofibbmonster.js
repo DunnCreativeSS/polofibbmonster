@@ -373,9 +373,9 @@ function update2(wp, collection, callback){
  }
  function dobuy(d3d, cc, amount){
 	 update2(d3d, cc, function(data){
-	 poloniex.buy(d3d.trades.currencyPair, d3d.trades.buy1, amount, 0, 0, 0 , function (data2){
+	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data2){
 		console.log(data2);
-		poloniex.sell(d3d.trades.currencyPair, d3d.trades.sell1, amount, 0, 0, 0 , function (data3){
+		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell1(.toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data3){
 		console.log(data3);
 			d3d.order1 = data3.orderNumber;
 			cc.update({
@@ -406,9 +406,9 @@ function update2(wp, collection, callback){
 
  function dobuy2(d3d, cc, amount){
 	 update2(d3d, cc, function(data){
-	 poloniex.buy(d3d.trades.currencyPair, d3d.trades.buy2, amount, 0, 0, 0 , function (data2){
+	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data2){
 		console.log(data2);
-		poloniex.sell(d3d.trades.currencyPair, d3d.trades.buy1, amount, 0, 0, 0 , function (data3){
+		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data3){
 			console.log(data3);
 			d3d.order2 = data3.orderNumber;
 			cc.update({
