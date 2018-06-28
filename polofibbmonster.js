@@ -121,11 +121,11 @@ app.get('/', function(req, res) {
 									for (var a in data[d]){
 										data[d][a].pair = d;
 										if (data[d][a].type == 'sell'){
-											totals[d] += data[d][a].total;
+											totals[d] += parseFloat(data[d][a].total);
 										}else {
-											totals[d] = totals[d] - data[d][a].total;
+											totals[d] = totals[d] - parseFloat(data[d][a].total);
 										}
-										trades.push(data[d][a]);
+										//trades.push(data[d][a]);
 									
 									}
 								}
