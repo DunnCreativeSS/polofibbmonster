@@ -582,7 +582,6 @@ function collectionDo(collection, data, balances, btc){
 									}
 								}
 							}
-							}
 							//console.log('ds: ');
 							//console.log(ds);
 							if (doc3[d].trades.currencyPair){
