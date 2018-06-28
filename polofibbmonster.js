@@ -116,7 +116,7 @@ app.get('/', function(req, res) {
 							var trades = []
 							poloniex.returnMyTradeHistory('all', tsYesterday, ts, 5000, function(err, data) {
 								console.log(err);
-								console.log(data);
+								//console.log(data);
 							for (var d in data){
 								totals[d] = 0
 								if (data[d].length > 0){
@@ -312,7 +312,7 @@ poloniex.subscribe('ticker');
 	}
  function subs(currencyPair){
 	 setTimeout(function(){
-						console.log('3');
+					//	console.log('3');
 					poloniex.subscribe(currencyPair);
 					}, Math.random() * 10000);
  }
@@ -546,7 +546,7 @@ function cancel(d3d, cc, balance){
 	});
  }
 function doCollections(collections, balances){
-						console.log('8'); 
+						//console.log('8'); 
     poloniex.returnBalances(function(err, balances) {
         if (err) {
             ////console.log(err.message);
