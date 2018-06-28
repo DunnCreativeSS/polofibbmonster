@@ -622,19 +622,19 @@ poloniex.on('message', (channelName, data, seq) => {
 		 if (data[d].type =='orderBookModify'){
 			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask'){
 				 bestAsk[channelName] = data[d].data.rate;
-				 console.log(data[d].data.rate);
 				 update(data[d].data.rate, data[d].data.rate, channelName, collection)
 			 }
 		 }
 		 else if (data[d].type =='orderBookRemove'){
 			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask'){
 				 bestAsk[channelName] = data[d].data.rate;
-				 console.log(data[d].data.rate);
 				 update(999999999999999, data[d].data.rate, channelName, collection)
 			 }
 		 }
 		 }
 		//	 }
+		console.log(channelName);
+			 console.log(bestAsk[channelName]);
 	}
  
   if (channelName === 'BTC_ETC') {
