@@ -344,6 +344,9 @@ poloniex.subscribe('ticker');
 		
 	});
 	}
+					}
+					});
+				}
  function subs(currencyPair){
 	 setTimeout(function(){
 					//	console.log('3');
