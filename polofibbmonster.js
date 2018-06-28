@@ -2,7 +2,7 @@ const Poloniex = require('poloniex-api-node');
 const tw = require('./trendyways.js');
 var MongoClient = require('mongodb').MongoClient;
 let poloniex;
-
+				var bestAsk = []
 poloniex = new Poloniex('UKPBKVD4-YM7NGFH4-E5XR83C6-NOULGVC0', process.env.apikey , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 
 const express = require('express');
@@ -91,7 +91,7 @@ app.get('/', function(req, res) {
 							var btcbal = 0;
 							for (var bal in balances){
 								var ticker = 'BTC_' + bal;
-								if (bestAak[ticker]){
+								if (bestAsk[ticker]){
 								console.log(ticker);
 								
 								console.log(bestAsk[ticker]);
@@ -634,7 +634,6 @@ var dbo;
 				////console.log('dbo');
 				
 				});
-				var bestAsk = []
 poloniex.on('message', (channelName, data, seq) => {
   if (channelName === 'ticker') {
 	  msgcount++;
