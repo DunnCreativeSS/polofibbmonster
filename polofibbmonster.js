@@ -349,6 +349,7 @@ setTimeout(function(){
 MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 	console.log(err);
     var dbo = db.db('polomonster5')
+	var count = 0;
     dbo.listCollections().toArray(function(err, collInfos) {
         // collInfos is an array of collection info objects that look like:
         // { name: 'test', options: {} }
@@ -358,7 +359,14 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
             collections.push(dbo.collection(collInfos[col].name));
         }
         //////console.log(dbs);
-        doCollections(collections);
+        if (count + 1 <= collInfos.length - 1){
+						count++;
+						////////console.log(count);
+					}else {
+						////////console.log('settimeout');
+                setTimeout(function() {
+                    doCollections(collections);
+                }, 500);
     });
 });
 }, 10000);
@@ -633,7 +641,7 @@ godobuy = false;
 						////////console.log('settimeout');
                 setTimeout(function() {
                     doCollections(collections);
-                }, 2500);
+                }, 500);
 					
 					}}
                 });
