@@ -248,10 +248,8 @@ poloniex.subscribe('ticker');
 				winners[p].cancelled = false;
 				if (winners[p].currencyPair.substr(0, winners[p].currencyPair.indexOf('_')) == 'BTC'){
 					
-					insert(winners[p], collection);
-					setTimeout(function(){
 					poloniex.subscribe(winners[p].currencyPair);
-					}, 10000);
+					insert(winners[p], collection);
 							}
 				}
 							
