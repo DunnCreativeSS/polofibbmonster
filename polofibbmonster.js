@@ -320,8 +320,17 @@ poloniex.subscribe('ticker');
  }
  
  function insert(wp, collection){
-	 	
-	 console.log('insert');
+	 collection.update({
+		'trades.currencyPair': wp.currencyPair
+	}, { $set: {
+		'trades': wp
+	}
+	},
+	function(err, result) {
+
+		if (err) console.log(err);
+		if (result.result.nModified == 0) {
+			
 			collection.insertOne({
 				'trades': wp
 			}, function(err, res) {
@@ -332,10 +341,16 @@ poloniex.subscribe('ticker');
 			}
 			  ////console.log(res.result);
 			}); 
-		
+		} else {
+			if (wp.currencyPair == "BTC_BCH"){
+				////console.log(wp);
+			}
+			////console.log(wp);
+		////console.log(result.result);
+		}
+	});
  }
  function update(ask, bid, currencyPair, collection){
-	 console.log('update');
 	 collection.update({
 		'trades.currencyPair': currencyPair
 	},{
@@ -376,7 +391,7 @@ var collections = []
 setTimeout(function(){
 MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 	console.log(err);
-    var dbo = db.db('polomonster138-2')
+    var dbo = db.db('polomonster138-3')
 	var count = 0;
     dbo.listCollections().toArray(function(err, collInfos) {
         // collInfos is an array of collection info objects that look like:
@@ -639,7 +654,7 @@ godobuy = false;
 var dbo;
 				MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 					console.log(err);
-				dbo = db.db('polomonster138-2')
+				dbo = db.db('polomonster138-3')
 				////console.log('dbo');
 				
 				});
