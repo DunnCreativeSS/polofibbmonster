@@ -412,12 +412,11 @@ function update21(wp){
 	var collection = dbo.collection(wp.trades.currencyPair);
 	console.log('wah wah ' + wp.trades.currencyPair);
 	collection.update({
-		"trades.currencyPair": wp.trades.currecncyPair
 	}, {
 		$set: {
 			"trades.bought1": true
 		}
-	},
+	}, { multi: true },
 	function(err, result) {
 	   console.log(err);
 		console.log(result.result);
@@ -430,12 +429,12 @@ function update21(wp){
  function update22(wp){
 	var collection = dbo.collection(wp.trades.currencyPair);
 	collection.update({
-		"trades.currencyPair": wp.trades.currecncyPair
+		
 	}, {
 		$set: {
 			"trades.bought2": true
 		}
-	},
+	},{ multi: true },
 	function(err, result) {
 	   console.log(err);
 		console.log(result.result);
