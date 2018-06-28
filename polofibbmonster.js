@@ -4,11 +4,12 @@ var MongoClient = require('mongodb').MongoClient;
 let poloniex;
 				var bestAsk = []
 poloniex = new Poloniex('UKPBKVD4-YM7NGFH4-E5XR83C6-NOULGVC0', process.env.apikey , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
-
+var mongodb = "";
 const express = require('express');
+var startDate = new Date('2018/06/28 04:22')
 var favicon = require('serve-favicon')
 var path = require('path')
- 
+ var startBtc = 0.00741434 ;
 var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
@@ -82,7 +83,7 @@ app.get('/', function(req, res) {
 						count++;
 					}
 					else{
-						
+						console.log('1');
 						poloniex.returnBalances(function(err, balances) {
 						if (err) {
 							////console.log(err.message);
@@ -100,11 +101,21 @@ app.get('/', function(req, res) {
 							}
 							}
 							btcbal += balances.BTC;
+							var percent =  (100 * (-1 * (1 - (btcbal / startBtc)))).toFixed(4);
+					var diff2 = Math.abs(new Date() - startDate);
+					var minutes = Math.floor((diff2/1000)/60);
+					var hours = ((diff2/1000)/60 / 60).toFixed(8);
+					var percentHr = (percent / hours).toFixed(4);
 							//////console.log(balances.BTC);
 							stoplimits.sort(sortFunction);
 		//////console.log(stoplimits);
 		res.send('<head><link rel="icon" href="https://polofibbmonster.herokuapp.com/favicon.ico?v=2" /><meta http-equiv="refresh" content="36"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1>'
-		+ 'BTC Balance: ' + btcbal + '<br><div style="display:none;" id="stoplimits">' + JSON.stringify(stoplimits) + '</div>'
+		+ 'BTC Balance: ' + btcbal + '<br>'
+		+ 'minutes: ' + minutes + '<br>'
+		+ 'hours: ' + hours + '<br>'
+		+ 'percent: ' + percent + '<br>'
+		+ 'percent/hr: ' + percentHr + '<br>'
+		+ '<div style="display:none;" id="stoplimits">' + JSON.stringify(stoplimits) + '</div>'
 		+ 'stoplimits: '
 		+ '<div id="showData"></div>'
 		+ '<script>for(var col=[],i=0;i<JSON.parse($("#stoplimits").text()).length;i++)for(var key in JSON.parse($("#stoplimits").text())[i])-1===col.indexOf(key)&&col.push(key);var table2=document.createElement("table");for(tr=table2.insertRow(-1),i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#stoplimits").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#stoplimits").text())[i][col[j]]}}var divContainer2=document.getElementById("showData");divContainer2.innerHTML="",divContainer2.appendChild(table2);for(var col=[],i=0;i<JSON.parse($("#orders").text()).length;i++)for(var key in JSON.parse($("#orders").text())[i])-1===col.indexOf(key)&&col.push(key);var table3=document.createElement("table");for(tr=table2.insertRow(-1),i=0;i<col.length;i++){(th=document.createElement("th")).innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){(tabCell=tr.insertCell(-1)).innerHTML=JSON.parse($("#orders").text())[i][col[j]]}}var divContainer3=document.getElementById("showData2");divContainer3.innerHTML="",divContainer3.appendChild(table3);for(col=[],i=0;i<JSON.parse($("#openorders").text()).length;i++)for(var key in JSON.parse($("#openorders").text())[i])-1===col.indexOf(key)&&col.push(key);var table4=document.createElement("table");for(tr=table2.insertRow(-1),i=0;i<col.length;i++){var th;(th=document.createElement("th")).innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#openorders").text()).length;i++){tr=table2.insertRow(-1);for(j=0;j<col.length;j++){var tabCell;(tabCell=tr.insertCell(-1)).innerHTML=JSON.parse($("#openorders").text())[i][col[j]]}}var divContainer4=document.getElementById("showData3");divContainer4.innerHTML="",divContainer4.appendChild(table4);</script>');
@@ -118,6 +129,7 @@ app.get('/', function(req, res) {
 });
 
             app.listen(process.env.PORT || 8080, function() {});
+						console.log('2');
 poloniex.subscribe('ticker');
 //poloniex.subscribe('BTC_ETC');
  var vols = [];
@@ -260,6 +272,7 @@ poloniex.subscribe('ticker');
 	}
  function subs(currencyPair){
 	 setTimeout(function(){
+						console.log('3');
 					poloniex.subscribe(currencyPair);
 					}, Math.random() * 10000);
  }
@@ -333,7 +346,7 @@ poloniex.subscribe('ticker');
 var dbs = []
 var collections = []
 setTimeout(function(){
-MongoClient.connect(process.env.mongodb, function(err, db) {
+MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 	console.log(err);
     var dbo = db.db('polomonster5')
     dbo.listCollections().toArray(function(err, collInfos) {
@@ -406,9 +419,11 @@ function update21(wp, collection, callback){
  function dobuy(d3d, cc, amount){
 	 update21(d3d, cc, function(data){
 		 setTimeout(function(){
+						console.log('4');
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data2){
 		console.log(data2);
 		 setTimeout(function(){
+						console.log('5');
 		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (data3){
 		console.log(data3);
 		
@@ -445,9 +460,11 @@ function update21(wp, collection, callback){
  function dobuy2(d3d, cc, amount){
 	 update22(d3d, cc, function(data){
 		 setTimeout(function(){
+						console.log('6');
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (data2){
 		console.log(data2);
 		setTimeout(function(){
+						console.log('7');
 		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (data3){
 			console.log(data3);
 			cc.update({
@@ -536,7 +553,8 @@ function cancel(d3d, cc, balance){
 	});
 	});
  }
-function doCollections(collections) {
+function doCollections(collections){
+						console.log('8'); 
     poloniex.returnBalances(function(err, balances) {
         if (err) {
             ////console.log(err.message);
@@ -628,7 +646,7 @@ godobuy = false;
 
 }
 var dbo;
-				MongoClient.connect(process.env.mongodb, function(err, db) {
+				MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 					console.log(err);
 				dbo = db.db('polomonster5')
 				////console.log('dbo');
