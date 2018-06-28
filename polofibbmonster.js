@@ -564,6 +564,7 @@ function doCollections(collections, balances){
 							
 						//console.log('8'); 
     poloniex.returnBalances(function(err, balances) {
+				poloniex.returnOpenOrders('all', function(err, data) {
         if (err) {
             ////console.log(err.message);
 			
@@ -579,7 +580,6 @@ function doCollections(collections, balances){
 				btc = 0.0001;
 			}
 			var count = 0;
-				poloniex.returnOpenOrders('all', function(err, data) {
 							
             for (var c in collections) {
                 var collection = collections[c];
@@ -662,8 +662,8 @@ godobuy = false;
 
 
 							}
-            });
         }
+            });
     });
 }
 var dbo;
