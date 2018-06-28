@@ -6,9 +6,12 @@ let poloniex;
 poloniex = new Poloniex('HZ87QQM5-9VOBUC1E-Z3P28SIP-VEMV6LRE', process.env.apikey , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 
 const express = require('express');
-const app = express();
-const favicon = require('express-favicon');
-app.use(favicon('./public/favicon.png'));
+var favicon = require('serve-favicon')
+var path = require('path')
+ 
+var app = express()
+app.use(favicon(path.join(__dirname, 'public', 'favicon.png')))
+
 var dorefresh = false;
 var request = require("request")
 var bodyParser = require('body-parser')
