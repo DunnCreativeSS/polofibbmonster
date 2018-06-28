@@ -8,6 +8,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
 	"mongodb": "*",
+    "co": "4.6.0",
     "poloniex-api-node": "^1.9.0",
     "request": "^2.87.0",
     "trendyways": "^0.4.2"

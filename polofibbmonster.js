@@ -270,6 +270,7 @@ var dbs = []
 var collections = []
 setTimeout(function(){
 MongoClient.connect(process.env.mongodb, function(err, db) {
+	console.log(err);
     var dbo = db.db('polomonster3')
     dbo.listCollections().toArray(function(err, collInfos) {
         // collInfos is an array of collection info objects that look like:
@@ -502,6 +503,7 @@ function doCollections(collections) {
 }
 var dbo;
 				MongoClient.connect(process.env.mongodb, function(err, db) {
+					console.log(err);
 				dbo = db.db('polomonster3')
 				console.log('dbo');
 				
