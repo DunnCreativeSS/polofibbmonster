@@ -620,7 +620,7 @@ function collectionDo(collection, data, balances, btc){
 						//console.log(doc3[d].trades.currencyPair);
 						//console.log(doc3[d].trades.bought1);
 						if (doc3[d].trades.bought1 == false){
-                        if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
+                        if (parseFloat(doc3[d].trades.lowestAsk)  * .9975<= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
                         var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
                             //////console.log(doc3[d].trades.last);
 							//////console.log(doc3[d].trades);
