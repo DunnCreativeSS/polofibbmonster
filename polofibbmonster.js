@@ -86,7 +86,7 @@ app.get('/', function(req, res) {
 						poloniex.returnBalances(function(err, balances) {
 						if (err) {
 							////console.log(err.message);
-							res.send('temporary error, retry');
+							res.send('temporary error, retry ' + err.message);
 						} else {
 							//////console.log(balances.BTC);
 						poloniex.returnOpenOrders(doc3[d].trades.currencyPair, function(data){
