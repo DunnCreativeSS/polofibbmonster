@@ -98,8 +98,6 @@ app.get('/', function(req, res) {
 									for (var a in data[d]){
 										data[d][a].pair = d;
 										orders.push(data[d][a]);
-										console.log(parseFloat(data[d][a].amount));
-										console.log(parseFloat(bestAsk[data[d][a].pair]));
 										btcbal += (parseFloat(data[d][a].amount) * parseFloat(bestAsk[data[d][a].pair]))
 									}
 								}
@@ -371,7 +369,7 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 						////////console.log('settimeout');
                 setInterval(function() {
                     doCollections(collections);
-                }, 3500);
+                }, 7500);
     });
 });
 }, 10000);
