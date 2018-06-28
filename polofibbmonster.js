@@ -465,7 +465,7 @@ function doCollections(collections) {
 						}
 						
                         if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.buy1 && doc3[d].bought1 == false) {
-                        var amount = btc * parseFloat(doc3[d].trades.lowestAsk);
+                        var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
                             console.log(doc3[d].trades.last);
 							console.log(doc3[d].trades);
 							doc3[d].bought1 = true;
@@ -474,7 +474,7 @@ function doCollections(collections) {
                         }
                         if (doc3[d].trades.buy2) {
                             if (doc3[d].trades.lowestAsk <= doc3[d].trades.buy2 && doc3[d].bought2 == false) {
-                        var amount = btc * parseFloat(doc3[d].trades.lowestAsk);
+                        var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
 							console.log(doc3[d].trades.last);
 							console.log(doc3[d].trades);
 							doc3[d].bought2 = true;
