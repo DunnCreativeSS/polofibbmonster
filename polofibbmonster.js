@@ -89,20 +89,7 @@ app.get('/', function(req, res) {
 							////console.log(err.message);
 							res.send('temporary error, retry ' + err.message);
 						} else {
-							var btcbal = 0;
-							for (var bal in balances){
-								if (balances[bal] != 0){
-								var ticker = 'BTC_' + bal;
-								if (bestAsk[ticker]){
-								console.log(ticker);
-								
-								console.log(bestAsk[ticker]);
-								console.log(balances[bal]);
-								btcbal += (parseFloat(bestAsk[ticker]) * parseFloat(balances[bal]));
-								}
-							}
-							}
-							btcbal += parseFloat(balances.BTC);
+							
 							btcbal = 0;
 							var orders = []
 							poloniex.returnOpenOrders('all', function(err, data) {
@@ -111,6 +98,8 @@ app.get('/', function(req, res) {
 									for (var a in data[d]){
 										data[d][a].pair = d;
 										orders.push(data[d][a]);
+										console.log(parseFloat(data[d][a].amount));
+										console.log(parseFloat(bestAsk[data[d][a].pair]));
 										btcbal += (parseFloat(data[d][a].amount) * parseFloat(bestAsk[data[d][a].pair]))
 									}
 								}
