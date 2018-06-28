@@ -532,8 +532,9 @@ function doCollections(collections) {
 						if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.sl && doc3[d].bought2 == true && doc3[d].cancelled == false){
 							//cancel2(doc3[d], collections[c],  balances[doc3[d].currencyPair.substr(doc3[d].currencyPair.indexOf('_'), doc3[d].currencyPair.length)]);
 						}
+						if (doc3[d].bought1 == false){
 						console.log(doc3[d]);
-                        if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.buy1 && doc3[d].bought1 == false) {
+                        if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.buy1) {
                         var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
                             //////console.log(doc3[d].trades.last);
 							//////console.log(doc3[d].trades);
@@ -541,6 +542,7 @@ function doCollections(collections) {
 							dobuy(doc3[d], collections[c]. amount);
 
                         }
+						}
                         if (doc3[d].trades.buy2) {
                             if (doc3[d].trades.lowestAsk <= doc3[d].trades.buy2 && doc3[d].bought2 == false) {
                         var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
