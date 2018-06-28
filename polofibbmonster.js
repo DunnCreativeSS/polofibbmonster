@@ -454,7 +454,7 @@ function update21(wp, collection, callback){
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		 console.log(err)
 		console.log(data2);
-		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (err, data3){
+		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell1).toFixed(8), (amount * .997).toFixed(8), 0, 0, 0 , function (err, data3){
 		console.log(data3);
 		console.log(err);
 
@@ -468,7 +468,7 @@ function update21(wp, collection, callback){
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		console.log(data2);
 		console.log(err);
-		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (err, data3){
+		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), (amount * .997).toFixed(8), 0, 0, 0 , function (err, data3){
 			console.log(data3);
 			console.log(err);
 			
@@ -679,7 +679,7 @@ poloniex.on('message', (channelName, data, seq) => {
 		 }
 		 for (var d in data){
 		 if (data[d].type =='orderBookModify'){
-			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'bid'){
+			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask'){
 				 bestAsk[channelName] = data[d].data.rate;
 		
 				 update(data[d].data.rate, data[d].data.rate, channelName, collection)
