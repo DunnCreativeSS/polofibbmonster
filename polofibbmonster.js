@@ -614,12 +614,12 @@ poloniex.on('message', (channelName, data, seq) => {
 			 //console.log(Object.keys(data[0].data.asks)[0]);
 			 //console.log(Object.keys(data[0].data.bids)[0]);
 			 var collection = dbo.collection(channelName);
-			 bestAsk[channelName] = data[0].data.asks)[0];
+			 bestAsk[channelName] = Object.keys(data[0].data.asks)[0];
 			 update(Object.keys(data[0].data.asks)[0], Object.keys(data[0].data.bids)[0], channelName, collection)
 		 //poloniex.unsubscribe(channelName);
 		 }
 		 for (var d in data){
-		 else if (data[d].type =='orderBookModify'){
+		 if (data[d].type =='orderBookModify'){
 			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask'){
 				 bestAsk[channelName] = data[d].data.rate;
 				 console.log(data[d].data.rate);
