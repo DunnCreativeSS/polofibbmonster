@@ -103,6 +103,7 @@ app.get('/', function(req, res) {
 							}
 							}
 							btcbal += parseFloat(balances.BTC);
+							btcbal = 0;
 							var orders = []
 							poloniex.returnOpenOrders('all', function(err, data) {
 							for (var d in data){
@@ -110,10 +111,11 @@ app.get('/', function(req, res) {
 									for (var a in data[d]){
 										data[d][a].pair = d;
 										orders.push(data[d][a]);
-									
+										btcbal += parseFloat(data[d][a].amount) * (parseFloat(bestAsk[data[d][a].pair])
 									}
 								}
 							}
+							btcbal += parseFloat(balances.BTC);
 							
 							var percent =  (100 * (-1 * (1 - (btcbal / startBtc)))).toFixed(4);
 					var diff2 = Math.abs(new Date() - startDate);
