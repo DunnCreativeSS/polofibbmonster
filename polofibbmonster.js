@@ -9,7 +9,7 @@ const express = require('express');
 var startDate = new Date('2018/06/28 04:22')
 var favicon = require('serve-favicon')
 var path = require('path')
- var startBtc = 0.00741434 - 0.0000105251992848;
+ var startBtc = 0.0074038148007152;
 var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
@@ -111,6 +111,7 @@ app.get('/', function(req, res) {
 									}
 								}
 							}
+							
 							var percent =  (100 * (-1 * (1 - (btcbal / startBtc)))).toFixed(4);
 					var diff2 = Math.abs(new Date() - startDate);
 					var minutes = Math.floor((diff2/1000)/60);
