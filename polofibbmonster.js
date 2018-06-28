@@ -494,7 +494,7 @@ function doCollections(collections) {
 
 }
 var dbo;
-				MongoClient.connect("mongodb://localhost/polomonster3", function(err, db) {
+				MongoClient.connect(process.env.mongodb, function(err, db) {
 				dbo = db.db('polomonster3')
 				console.log('dbo');
 				

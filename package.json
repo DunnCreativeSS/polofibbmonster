@@ -6,21 +6,19 @@
   "bundleDependencies": false,
   "dependencies": {
     "body-parser": "^1.18.3",
-    "ccxt": "*",
     "express": "^4.16.3",
-    "mathjs": "^5.0.0",
     "poloniex-api-node": "^1.9.0",
     "request": "^2.87.0",
     "trendyways": "^0.4.2"
   },
   "scripts": {
-    "start": "node qryptos.js"
+    "start": "node polofibbmonster.js"
   },
   "deprecated": false,
-  "description": "Engine for Qryptos automation",
+  "description": "Engine for Polo automation",
   "engines": {
     "node": ">=0.6"
   },
-  "name": "qrytosfeemonster",
+  "name": "polofibbmonster",
   "version": "1.0.4"
 }
