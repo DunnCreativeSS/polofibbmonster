@@ -320,6 +320,7 @@ poloniex.subscribe('ticker');
  }
  
  function insert(wp, collection){
+	 console.log('insert');
 	 collection.update({
 		'trades.currencyPair': wp.currencyPair
 	},{
@@ -351,11 +352,22 @@ poloniex.subscribe('ticker');
 	});
  }
  function update(ask, bid, currencyPair, collection){
+	 collection.find({
+
+                }, {
+                    $exists: true
+                }).sort({
+                    _id: -1
+
+                }).toArray(function(err, doc3) {
+                    for (var d in doc3) {
+						if (doc3[d].trades){
+							doc3[d].trades.lowestAsk = ask;
 	 collection.update({
 		'trades.currencyPair': currencyPair
 	},{
                             $set: {
-                                'trades.lowestAsk': ask
+                                'trades': doc3[d].trades
                             }
                         }, {
 		
@@ -381,6 +393,7 @@ poloniex.subscribe('ticker');
 		////console.log(result.result);
 		}
 	});
+						});
  }
  var btceth = 0;
  var btcxmr = 0;
@@ -581,7 +594,7 @@ function collectionDo(collection, data, balances, btc){
 						//console.log(doc3[d].trades.currencyPair);
 						//console.log(doc3[d].trades);
 						if (doc3[d].trades.bought1 == false){
-                        if (parseFloat(doc3[d].trades.lowestAsk)<= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
+                        if (parseFloat(doc3[d].trades.lowestAsk) * .997 <= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
                         var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
                             //////console.log(doc3[d].trades.last);
 							//////console.log(doc3[d].trades);
@@ -601,7 +614,7 @@ function collectionDo(collection, data, balances, btc){
 								   console.log(err);
 									console.log(result.result);
 									
-								godobuy = true;
+								//godobuy = true;
 														
 
 								});
@@ -627,7 +640,7 @@ godobuy = false;
 								   console.log(err);
 									console.log(result.result);
 									
-								godobuy = true;
+								//godobuy = true;
 														
 
 								});
