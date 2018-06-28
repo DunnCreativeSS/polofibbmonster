@@ -591,7 +591,6 @@ function collectionDo(collection, data, balances, btc){
 
 							console.log('dobuy: ' +  amount);
 							console.log(doc3[d]);
-							console.log(collection.getName());
 							collection.update({
 								}, {
 									$set: {
