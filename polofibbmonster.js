@@ -8,7 +8,7 @@ poloniex = new Poloniex('HZ87QQM5-9VOBUC1E-Z3P28SIP-VEMV6LRE', process.env.apike
 const express = require('express');
 const app = express();
 const favicon = require('express-favicon');
-app.use(favicon(__dirname + '/public/favicon.png'));
+app.use(favicon('./public/favicon.png'));
 var dorefresh = false;
 var request = require("request")
 var bodyParser = require('body-parser')
