@@ -1,8 +1,9 @@
 const Poloniex = require('poloniex-api-node');
 const tw = require('./trendyways.js');
 var MongoClient = require('mongodb').MongoClient;
-let poloniex;
+let poloniex
 				var bestAsk = []
+				var bestBid = []
 poloniex = new Poloniex('UKPBKVD4-YM7NGFH4-E5XR83C6-NOULGVC0', process.env.apikey , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 var mongodb = "";
 const express = require('express');
@@ -102,8 +103,8 @@ app.get('/', function(req, res) {
 								if (data[d].length > 0){
 									for (var a in data[d]){
 										data[d][a].pair = d;
-										data[d][a].currentAsk = bestAsk[data[d][a].pair];
-										data[d][a].percent = (parseFloat(data[d][a].currentAsk) / parseFloat(data[d][a].rate));
+										data[d][a].currentBid = bestBid[data[d][a].pair];
+										data[d][a].percent = (parseFloat(data[d][a].currentBid) / parseFloat(data[d][a].rate));
 										orders.push(data[d][a]);
 										btcbal += (parseFloat(data[d][a].amount) * parseFloat(bestAsk[data[d][a].pair]))
 									}
@@ -736,6 +737,7 @@ poloniex.on('message', (channelName, data, seq) => {
 			 ////console.log(Object.keys(data[0].data.asks)[0]);
 			 ////console.log(Object.keys(data[0].data.bids)[0]);
 			 bestAsk[channelName] = Object.keys(data[0].data.asks)[0];
+			 bestBid[channelName] = Object.keys(data[0].data.bids)[0];
 		
 			 update(Object.keys(data[0].data.asks)[0], Object.keys(data[0].data.bids)[0], channelName, collection)
 		 //poloniex.unsubscribe(channelName);
@@ -746,6 +748,9 @@ poloniex.on('message', (channelName, data, seq) => {
 				 bestAsk[channelName] = data[d].data.rate;
 		
 				 update(data[d].data.rate, data[d].data.rate, channelName, collection)
+			 }if (data[d].data.rate >= bestAsk[channelName] && data[d].data.type == 'bid'){
+				 bestBid[channelName] = data[d].data.rate;
+		
 			 }
 		 }
 		 else if (data[d].type =='orderBookRemove'){
@@ -753,6 +758,9 @@ poloniex.on('message', (channelName, data, seq) => {
 				 bestAsk[channelName] = data[d].data.rate;
 		
 				 update(data[d].data.rate, data[d].data.rate, channelName, collection)
+			 }if (data[d].data.rate >= bestBid[channelName] && data[d].data.type == 'bid'){
+				 bestBid[channelName] = data[d].data.rate;
+		
 			 }
 		 }
 		 }
