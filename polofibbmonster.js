@@ -13,7 +13,11 @@ var path = require('path')
  var startBtc = 0.007759151314717699;
 var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
-
+	function sortFunction3(a,b){  
+				var dateA = new Date(a.datetime).getTime();
+				var dateB = new Date(b.datetime).getTime();
+				return dateA < dateB ? 1 : -1;  
+			}; 
 var dorefresh = false;
 var request = require("request")
 var bodyParser = require('body-parser')
@@ -141,6 +145,7 @@ function doget(req, res){
 					var hours = ((diff2/1000)/60 / 60).toFixed(8);
 					var percentHr = (percent / hours).toFixed(4);
 							//////console.log(balances.BTC);
+							trades.sort(sortFunction3);
 							stoplimits.sort(sortFunction);
 		//////console.log(stoplimits);
 		console.log((totals).toString());
