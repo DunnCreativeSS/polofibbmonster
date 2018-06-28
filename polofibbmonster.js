@@ -630,7 +630,7 @@ poloniex.on('message', (channelName, data, seq) => {
 			 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask'){
 				 bestAsk[channelName] = data[d].data.rate;
 				 console.log(data[d].data.rate);
-				 update(0, data[d].data.rate, channelName, collection)
+				 update(999999999999999, data[d].data.rate, channelName, collection)
 			 }
 		 }
 		 }
