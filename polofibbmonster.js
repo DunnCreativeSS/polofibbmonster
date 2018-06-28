@@ -414,9 +414,7 @@ function update21(wp, collection){
                             $set: {
                                 'trades.bought1': true
                             }
-                        }, {
-		
-	},
+                        }, {multi: true},
 	function(err, result) {
 
 		if (err) console.log(err);
@@ -434,9 +432,7 @@ function update21(wp, collection){
                             $set: {
                                 'trades.bought2': true
                             }
-                        }, {
-		
-	},
+                        }, {multi: true},
 	function(err, result) {
 
 		if (err) console.log(err);
@@ -539,9 +535,7 @@ function cancel(d3d, cc, balance){
                                 'trades.bought1': false,
 								'trades.bought2': false
                             }
-                        }, {
-		
-	},
+                        }, {multi: true},
 	function(err, result) {
 
 		if (err) console.log(err);
@@ -616,7 +610,7 @@ function doCollections(collections, balances){
 						//console.log(doc3[d].trades.currencyPair);
 						//console.log(doc3[d].trades.bought1);
 						if (doc3[d].trades.bought1 == false){
-                        if (parseFloat(doc3[d].trades.lowestAsk) * 0.998<= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
+                        if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
                         var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
                             //////console.log(doc3[d].trades.last);
 							//////console.log(doc3[d].trades);
