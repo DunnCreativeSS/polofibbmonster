@@ -393,6 +393,9 @@ poloniex.subscribe('ticker');
 		////console.log(result.result);
 		}
 	});
+						}
+					}
+					
 						});
  }
  var btceth = 0;
