@@ -610,10 +610,10 @@ poloniex.on('message', (channelName, data, seq) => {
 			// if (JSON.parse(JSON.stringify(data)).type == "orderBookModify"){
 		 data = JSON.parse(JSON.stringify(data));
 		 
+			 var collection = dbo.collection(channelName);
 		 if (data[0].type =='orderBook'){
 			 //console.log(Object.keys(data[0].data.asks)[0]);
 			 //console.log(Object.keys(data[0].data.bids)[0]);
-			 var collection = dbo.collection(channelName);
 			 bestAsk[channelName] = Object.keys(data[0].data.asks)[0];
 			 update(Object.keys(data[0].data.asks)[0], Object.keys(data[0].data.bids)[0], channelName, collection)
 		 //poloniex.unsubscribe(channelName);
