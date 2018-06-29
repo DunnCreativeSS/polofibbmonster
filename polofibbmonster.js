@@ -118,6 +118,8 @@ function doget(req, res){
 								}
 							}
 							btcbal += parseFloat(balances.BTC);
+							poloniex.returnMarginAccountSummary(function(err, data){
+								btcbal = data.totalValue;
 							orders.sort(sortFunction2);
 							var ts = Math.round(new Date().getTime() / 1000) - 1000;
 							var tsYesterday = ts - (24 * 3600) - 1000;
@@ -175,6 +177,7 @@ function doget(req, res){
 					});
 					}
 					});
+							});
 		
 		}
 	});
@@ -225,9 +228,9 @@ poloniex.subscribe('ticker');
 		for (var a in basePairs[p]){
 			
 		poloniex.returnTradableBalances(function(err, data) {
-			console.log(data);
+			//console.log(data);
 			for (var d in data){
-				console.log(d);
+				//console.log(d);
 			subs(d);
 			}
 		});
