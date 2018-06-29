@@ -206,20 +206,20 @@ function doVol() {
     for (var p in basePairs) {
         for (var a in basePairs[p]) {
             if (p == 'USDT') {
-                if (parseFloat(basePairs[p][a].baseVolume / btcusdt) > (avg / 1.1)) {
+                if (parseFloat(basePairs[p][a].baseVolume / btcusdt) > (avg / 1.75)) {
                     winners.push(basePairs[p][a]);
                 }
             } else if (p == 'ETH') {
-                if (parseFloat(basePairs[p][a].baseVolume * btceth) > (avg / 1.1)) {
+                if (parseFloat(basePairs[p][a].baseVolume * btceth) > (avg / 1.75)) {
                     winners.push(basePairs[p][a]);
                 }
             } else if (p == 'XMR') {
-                if (parseFloat(basePairs[p][a].baseVolume * btcxmr) > (avg / 1.1)) {
+                if (parseFloat(basePairs[p][a].baseVolume * btcxmr) > (avg / 1.75)) {
                     winners.push(basePairs[p][a]);
                 }
 
             } else {
-                if (parseFloat(basePairs[p][a].baseVolume) > (avg / 1.1)) {
+                if (parseFloat(basePairs[p][a].baseVolume) > (avg / 1.75)) {
                     winners.push(basePairs[p][a]);
                 }
             }
@@ -384,8 +384,8 @@ setInterval(function() {
                         if (sells[sell] == ask) {
                             if (bestAsk[ask] != sellsP[sell]) {
                                 var spread = 100 * (-1 * (1 - bestAsk[ask] / bestBid[ask]))
-                                var bidrate = (1 + spread / 100 / 3.15);
-                                var askrate = (1 - spread / 100 / 3.15);
+                                var bidrate = (1 + spread / 100 / 9.15);
+                                var askrate = (1 - spread / 100 / 9.15);
 
 						if (moveOrders[parseFloat(sellsO[sell])] == false || moveOrders[parseFloat(sellsO[sell])] == undefined) {
                                     moveOrders[parseFloat(sellsO[sell])] = true;
@@ -402,8 +402,8 @@ setInterval(function() {
 								   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
                                 console.log(ask);
                                 var spread = 100 * (-1 * (1 - bestAsk[ask] / bestBid[ask]))
-                                var bidrate = (1 + spread / 100 / 3.15);
-                                var askrate = (1 - spread / 100 / 3.15);
+                                var bidrate = (1 + spread / 100 / 9.15);
+                                var askrate = (1 - spread / 100 / 9.15);
 
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
 						
@@ -416,8 +416,8 @@ setInterval(function() {
 								   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
                                 console.log(ask);
                                 var spread = 100 * (-1 * (1 - bestAsk[ask] / bestBid[ask]))
-                                var bidrate = (1 + spread / 100 / 3.15);
-                                var askrate = (1 - spread / 100 / 3.15);
+                                var bidrate = (1 + spread / 100 / 9.15);
+                                var askrate = (1 - spread / 100 / 9.15);
 
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
 						
@@ -430,8 +430,8 @@ setInterval(function() {
 								   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
                                 console.log(ask);
                                 var spread = 100 * (-1 * (1 - bestAsk[ask] / bestBid[ask]))
-                                var bidrate = (1 + spread / 100 / 3.15);
-                                var askrate = (1 - spread / 100 / 3.15);
+                                var bidrate = (1 + spread / 100 / 9.15);
+                                var askrate = (1 - spread / 100 / 9.15);
 
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
 						
@@ -444,8 +444,8 @@ setInterval(function() {
 								   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
                                 console.log(ask);
                                 var spread = 100 * (-1 * (1 - bestAsk[ask] / bestBid[ask]))
-                                var bidrate = (1 + spread / 100 / 3.15);
-                                var askrate = (1 - spread / 100 / 3.15);
+                                var bidrate = (1 + spread / 100 / 9.15);
+                                var askrate = (1 - spread / 100 / 9.15);
 
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
 						
@@ -464,8 +464,8 @@ setInterval(function() {
                         if (buys[buy] == bid) {
                             if (bestBid[bid] != buysP[buy] && bid != "BTC_DOGE" && bid != "USDT_BTC") {
                                 var spread = 100 * (-1 * (1 - bestAsk[bid] / bestBid[bid]))
-                                var bidrate = (1 + spread / 100 / 3.15);
-                                var askrate = (1 - spread / 100 / 3.15);
+                                var bidrate = (1 + spread / 100 / 9.15);
+                                var askrate = (1 - spread / 100 / 9.15);
                                 if (moveOrders[parseFloat(buysO[buy])] == false || moveOrders[parseFloat(buysO[buy])] == undefined) {
                                     moveOrders[parseFloat(buysO[buy])] = true;
                                         //console.log('parseFloat(buysO[buy]) ' + parseFloat(buysO[buy]));
@@ -477,8 +477,8 @@ setInterval(function() {
                     }
 					if (!buys.includes(bid)){
                         var spread = 100 * (-1 * (1 - bestAsk[bid] / bestBid[bid]))
-                        var bidrate = (1 + spread / 100 / 3.15);
-                        var askrate = (1 - spread / 100 / 3.15);
+                        var bidrate = (1 + spread / 100 / 9.15);
+                        var askrate = (1 - spread / 100 / 9.15);
 						if (spread >0.64){
                         dobuyt[bid] = true;
 						 if (bid.substr(0, bid.indexOf('_')) == "BTC") {
