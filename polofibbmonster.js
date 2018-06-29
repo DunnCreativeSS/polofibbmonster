@@ -223,6 +223,7 @@ poloniex.subscribe('ticker');
 	// //////console.logbasePairs);
 	for (var p in basePairs){
 		for (var a in basePairs[p]){
+			subs(basePairs[p][a].currencyPair);
 		if (p == 'USDT'){
 			volTot += parseFloat(basePairs[p][a].baseVolume / btcusdt);
 		}
@@ -323,7 +324,7 @@ poloniex.subscribe('ticker');
 				if (winners[p].currencyPair.substr(0, winners[p].currencyPair.indexOf('_')) == 'BTC'){
 					if (!winnas.includes(winners[p].currencyPair)){
 						winnas.push(winners[p].currencyPair);
-											subs(winners[p].currencyPair);
+											
 					
 					//insert(winners[p], collection);
 					}
