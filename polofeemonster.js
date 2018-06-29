@@ -459,20 +459,17 @@ setInterval(function() {
 }, 15000);
 function stobuy(bid, bestBidb, bidrate, btc){
 setTimeout(function() {
-	if ((gobuy[bid] == true || gobuy[bid] == undefined) ){
-		gobuy[bid] = false;
 			dobuy(bid, bestBidb * bidrate, (btc / bestBidb * .998));
 			console.log('buy buy! ' + bid + ' ' + (btc / bestBidb * .998));
-			}
+		
                                     }, Math.random() * 9000);
 }
 function stosell(ask, bestAska, askrate, amt){
 setTimeout(function() {
-										if (gosell[ask] == true || gosell[ask] == undefined){
-									gosell[ask] = false;
+										
                                         dosell(ask, bestAska * askrate, amt);
                                         console.log('sell sell! ' + ask + ' ' + amt);
-										}
+									
                                     }, Math.random() * 9000);
 }
 function mo2(which,rate,ask, sellsO, sell){
