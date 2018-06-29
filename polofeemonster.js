@@ -397,8 +397,9 @@ setInterval(function() {
                     }
 					if (!sells.includes(ask) && ask.substr(0, ask.indexOf('_')) == 'BTC'){
                         if (balances[ask.substr(ask.indexOf('_') + 1, ask.length)] != 0) {
-                            if (ask.substr(ask.indexOf('_') + 1, ask.length) != "BTC") {
-                                console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
+                            if (ask.substr(0, ask.indexOf('_')) == "BTC") {
+                               if (amt * .998 * bestAsk[ask] > 0.0001){
+								   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
                                 console.log(ask);
                                 var spread = 100 * (-1 * (1 - bestAsk[ask] / bestBid[ask]))
                                 var bidrate = (1 + spread / 100 / 3.15);
@@ -406,8 +407,53 @@ setInterval(function() {
 
 						console.log('spread: ' + spread + ' ' + (bestAsk[ask] - bestBid[ask]));
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
+						
                                 dosellt[ask] = true;
+                                   stosell(ask, bestAsk[ask], askrate, amt * .998);
+							   }
+                            }
+                                else if (ask.substr(0, ask.indexOf('_')) ==  "XMR") {
                                if (amt * .998 * bestAsk[ask] > 0.0001){
+								   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
+                                console.log(ask);
+                                var spread = 100 * (-1 * (1 - bestAsk[ask] / bestBid[ask]))
+                                var bidrate = (1 + spread / 100 / 3.15);
+                                var askrate = (1 - spread / 100 / 3.15);
+
+						console.log('spread: ' + spread + ' ' + (bestAsk[ask] - bestBid[ask]));
+						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
+						
+                                dosellt[ask] = true;
+                                   stosell(ask, bestAsk[ask], askrate, amt * .998);
+							   }
+                            }
+							else if (ask.substr(0, ask.indexOf('_')) == "ETH") {
+                               if (amt * .998 * bestAsk[ask] > 0.001){
+								   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
+                                console.log(ask);
+                                var spread = 100 * (-1 * (1 - bestAsk[ask] / bestBid[ask]))
+                                var bidrate = (1 + spread / 100 / 3.15);
+                                var askrate = (1 - spread / 100 / 3.15);
+
+						console.log('spread: ' + spread + ' ' + (bestAsk[ask] - bestBid[ask]));
+						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
+						
+                                dosellt[ask] = true;
+                                   stosell(ask, bestAsk[ask], askrate, amt * .998);
+							   }
+                            }
+							else if  (ask.substr(0, ask.indexOf('_')) ==  "USDT") {
+                               if (amt * .998 * bestAsk[ask] > 1){
+								   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
+                                console.log(ask);
+                                var spread = 100 * (-1 * (1 - bestAsk[ask] / bestBid[ask]))
+                                var bidrate = (1 + spread / 100 / 3.15);
+                                var askrate = (1 - spread / 100 / 3.15);
+
+						console.log('spread: ' + spread + ' ' + (bestAsk[ask] - bestBid[ask]));
+						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
+						
+                                dosellt[ask] = true;
                                    stosell(ask, bestAsk[ask], askrate, amt * .998);
 							   }
                             }
@@ -437,10 +483,9 @@ setInterval(function() {
                         var spread = 100 * (-1 * (1 - bestAsk[bid] / bestBid[bid]))
                         var bidrate = (1 + spread / 100 / 3.15);
                         var askrate = (1 - spread / 100 / 3.15);
-
+						if (spread >0.75){
                         dobuyt[bid] = true;
-                        if (bid.substr(0, bid.indexOf('_')) == 'BTC') {
-
+						 if (ask.substr(0, ask.indexOf('_')) == "BTC") {
 						console.log('spread: ' + spread + ' ' + (bestAsk[bid] - bestBid[bid]));
                             btc = 1.1 * parseFloat(balances.BTC) / 16;
                             if (btc < 0.0001) {
@@ -453,7 +498,47 @@ setInterval(function() {
                         if (dobuyt[bid] == true && bid != "BTC_DOGE"  && bid != "USDT_BTC") {
 							stobuy(bid, bestBid[bid], bidrate, (btc * .998))	
                         } 
-						}
+					}
+					} else  if (ask.substr(0, ask.indexOf('_')) == "USDT") {
+						console.log('spread: ' + spread + ' ' + (bestAsk[bid] - bestBid[bid]));
+                            btc = 1.1 * parseFloat(balances.USDT) / 16;
+                            if (btc < 1) {
+                                btc = 1.1 * 1;
+                            }
+                            //console.log(btc);
+							if (btc <= parseFloat(balances.USDT) ){
+                        if (dobuyt[bid] == true && bid != "BTC_DOGE"  && bid != "USDT_BTC") {
+							stobuy(bid, bestBid[bid], bidrate, (btc * .998))	
+                        } 
+							}
+						
+					}else  if (ask.substr(0, ask.indexOf('_')) == "ETH") {
+						console.log('spread: ' + spread + ' ' + (bestAsk[bid] - bestBid[bid]));
+                            btc = 1.1 * parseFloat(balances.ETH) / 16;
+                            if (btc < 0.001) {
+                                btc = 1.1 * 0.001;
+                            }
+							
+							if (btc <= parseFloat(balances.ETH) ){
+                            //console.log(btc);
+                        if (dobuyt[bid] == true && bid != "BTC_DOGE"  && bid != "USDT_BTC") {
+							stobuy(bid, bestBid[bid], bidrate, (btc * .998))	
+                        } 
+							}
+					}
+					else  if (ask.substr(0, ask.indexOf('_')) == "XMR") {
+						console.log('spread: ' + spread + ' ' + (bestAsk[bid] - bestBid[bid]));
+                            btc = 1.1 * parseFloat(balances.XMR) / 16;
+                            if (btc < 0.001) {
+                                btc = 1.1 * 0.001;
+                            }
+                            //console.log(btc);
+							if (btc <= parseFloat(balances.XMR) ){
+                        if (dobuyt[bid] == true && bid != "BTC_DOGE"  && bid != "USDT_BTC") {
+							stobuy(bid, bestBid[bid], bidrate, (btc * .998))	
+                        } 
+							}
+					}
 					}
                     
                 }
