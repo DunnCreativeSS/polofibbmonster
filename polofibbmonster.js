@@ -4,13 +4,13 @@ var MongoClient = require('mongodb').MongoClient;
 let poloniex
 				var bestAsk = []
 				var bestBid = []
-poloniex = new Poloniex('574V5VXQ-52IB5ZD5-QXTGDVNR-4Y0C6OT1', process.env.apikey , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
+poloniex = new Poloniex('574V5VXQ-52IB5ZD5-QXTGDVNR-4Y0C6OT1', process.env.apikey2 , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 var mongodb = "";
 const express = require('express');
-var startDate = new Date('2018/06/28 19:20')
+var startDate = new Date('2018/06/28 23:59')
 var favicon = require('serve-favicon')
 var path = require('path')
- var startBtc = 0.007759151314717699; //0.00796575 
+ var startBtc = 0.00726503 ; //0.00796575 
 var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 	function sortFunction3(a,b){  
@@ -122,7 +122,7 @@ function doget(req, res){
 							var ts = Math.round(new Date().getTime() / 1000) - 1000;
 							var tsYesterday = ts - (24 * 3600) - 1000;
 							var trades = []
-							poloniex.returnMyTradeHistory('all', tsYesterday, ts, 5000, function(err, data) {
+							poloniex.returnMyTradeHistory('all', tsYesterday, ts, 500, function(err, data) {
 								console.log(err);
 								//console.log(data);
 								var ccc = 0;
