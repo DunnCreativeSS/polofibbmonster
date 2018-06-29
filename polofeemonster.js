@@ -108,6 +108,7 @@ function doget(req, res) {
 
                             }
                         }
+						ccc++;
                     }
                     var percent = (100 * (-1 * (1 - (btcbal / startBtc)))).toFixed(4);
                     var diff2 = Math.abs(new Date() - startDate);
