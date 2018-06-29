@@ -206,20 +206,20 @@ function doVol() {
     for (var p in basePairs) {
         for (var a in basePairs[p]) {
             if (p == 'USDT') {
-                if (parseFloat(basePairs[p][a].baseVolume / btcusdt) > (avg / 1.75)) {
+                if (parseFloat(basePairs[p][a].baseVolume / btcusdt) > (avg / 1.1)) {
                     winners.push(basePairs[p][a]);
                 }
             } else if (p == 'ETH') {
-                if (parseFloat(basePairs[p][a].baseVolume * btceth) > (avg / 1.75)) {
+                if (parseFloat(basePairs[p][a].baseVolume * btceth) > (avg / 1.1)) {
                     winners.push(basePairs[p][a]);
                 }
             } else if (p == 'XMR') {
-                if (parseFloat(basePairs[p][a].baseVolume * btcxmr) > (avg / 1.75)) {
+                if (parseFloat(basePairs[p][a].baseVolume * btcxmr) > (avg / 1.1)) {
                     winners.push(basePairs[p][a]);
                 }
 
             } else {
-                if (parseFloat(basePairs[p][a].baseVolume) > (avg / 1.75)) {
+                if (parseFloat(basePairs[p][a].baseVolume) > (avg / 1.1)) {
                     winners.push(basePairs[p][a]);
                 }
             }
@@ -250,11 +250,11 @@ function doVol() {
             }
         });
 
-        subs(winners[p].currencyPair);
+        listening.push(winners[p].currencyPair);
     }
 }
 subsPairs = []
-
+var listening = []
 function subs(currencyPair) {
     if (!subsPairs.includes(currencyPair)) {
         subsPairs.push(currencyPair);
@@ -619,8 +619,10 @@ poloniex.on('message', (channelName, data, seq) => {
 
         var obj = JSON.parse(JSON.stringify(data));
         //////////console.log(obj);
+		if (listening.includes(obj.currencyPair)){
         bestAsk[obj.currencyPair] = obj.lowestAsk;
 		bestBid[obj.currencyPair] = obj.highestBid;
+		}	
 		if (obj.currencyPair == "BTC_ETH") {
             btceth = obj.last;
             //////////console.log('eth: ' + btceth);
