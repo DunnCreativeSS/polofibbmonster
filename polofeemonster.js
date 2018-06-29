@@ -249,7 +249,7 @@ function doVol() {
                 }
             }
         });
-
+		
         listening.push(winners[p].currencyPair);
     }
 }
@@ -395,22 +395,23 @@ setInterval(function() {
                             }
                         }
                     }
-					if (!sells.includes(ask) ){
-						
 
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
-						//console.log((amt * .998 * bestAsk[ask]));
+						console.log((amt * .998 * bestAsk[ask]));
+						console.log(ask);
                         if (balances[ask.substr(ask.indexOf('_') + 1, ask.length)] != 0) {
                             if (ask.substr(0, ask.indexOf('_')) == "BTC") {
                                if (amt * .998 * bestAsk[ask] > 0.0001){
-							//	   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
-                          //      console.log(ask);
+							   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
+                               console.log(ask);
                                 var spread = 100 * (-1 * (1 - bestAsk[ask] / bestBid[ask]))
                                 var bidrate = (1 + spread / 100 / 9.15);
                                 var askrate = (1 - spread / 100 / 9.15);
                                 dosellt[ask] = true;
+								if (ask != "BTC_DOGE"  && ask != "USDT_BTC") {
                                    stosell(ask, bestAsk[ask], askrate, amt * .998);
-							   }
+								}
+								   }
                             }
                                 else if (ask.substr(0, ask.indexOf('_')) ==  "XMR") {
                                if (amt * .998 * bestAsk[ask] > 0.0001){
@@ -423,7 +424,10 @@ setInterval(function() {
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
 						
                                 dosellt[ask] = true;
+																if (ask != "BTC_DOGE"  && ask != "USDT_BTC") {
+
                                    stosell(ask, bestAsk[ask], askrate, amt * .998);
+																}
 							   }
                             }
 							else if (ask.substr(0, ask.indexOf('_')) == "ETH") {
@@ -437,7 +441,10 @@ setInterval(function() {
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
 						
                                 dosellt[ask] = true;
+																if (ask != "BTC_DOGE"  && ask != "USDT_BTC") {
+
                                    stosell(ask, bestAsk[ask], askrate, amt * .998);
+							   }
 							   }
                             }
 							else if  (ask.substr(0, ask.indexOf('_')) ==  "USDT") {
@@ -451,11 +458,13 @@ setInterval(function() {
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
 						
                                 dosellt[ask] = true;
+																if (ask != "BTC_DOGE"  && ask != "USDT_BTC") {
+
                                    stosell(ask, bestAsk[ask], askrate, amt * .998);
+																}
 							   }
                             }
                         }
-					}
                    
                 }
 				}, 2000);
@@ -623,6 +632,7 @@ poloniex.on('message', (channelName, data, seq) => {
 		if (listening.includes(obj.currencyPair)){
         bestAsk[obj.currencyPair] = obj.lowestAsk;
 		bestBid[obj.currencyPair] = obj.highestBid;
+		
 		}	
 		if (obj.currencyPair == "BTC_ETH") {
             btceth = obj.last;
