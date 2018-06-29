@@ -7,7 +7,7 @@ let poloniex
 poloniex = new Poloniex('574V5VXQ-52IB5ZD5-QXTGDVNR-4Y0C6OT1', process.env.apikey2 , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 var mongodb = "";
 const express = require('express');
-var startDate = new Date('2018/06/28 23:59')
+var startDate = new Date('2018/06/29 03:08')
 var favicon = require('serve-favicon')
 var path = require('path')
  var startBtc = 0.00726503 ; //0.00796575 
