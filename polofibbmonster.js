@@ -152,6 +152,11 @@ function doget(req, res){
 							stoplimits.sort(sortFunction);
 		//////console.log(stoplimits);
 		console.log((totals).toString());
+		var thetotal = 0;
+		for (var t in totals){
+			thetotal+=totals[t].total;
+		}
+		thetotal = thetotal * Math.pow(10, 8);
 		res.send('<head><link rel="icon" href="https://polofibbmonster.herokuapp.com/favicon.ico?v=2" /><meta http-equiv="refresh" content="36"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1>'
 		+ 'current time: ' + new Date()
 		+ '<br>BTC Balance (including open orders if sold at current bid): ' + btcbal + '<br>'
@@ -159,6 +164,7 @@ function doget(req, res){
 		+ 'hours: ' + hours + '<br>'
 		+ 'percent: ' + percent + '%<br>'
 		+ '<h1>percent/hr: ' + percentHr + '%</h1><br>'
+		+ '<h1>total gains (sats): ' + thetotal
 		+ '<div style="display:none;" id="stoplimits">' + JSON.stringify(stoplimits) + '</div>'
 		+ '<div style="display:none;" id="orders">' + JSON.stringify(orders) + '</div>'
 		+ '<div style="display:none;" id="trades">' + JSON.stringify(trades) + '</div>'
