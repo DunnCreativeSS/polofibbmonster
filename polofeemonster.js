@@ -619,8 +619,8 @@ poloniex.on('message', (channelName, data, seq) => {
 
         var obj = JSON.parse(JSON.stringify(data));
         //////////console.log(obj);
-        bestAsk[obj.currencyPair] = obj.highestBid;
-		bestBid[obj.currencyPair] = obj.lowestAsk;
+        bestAsk[obj.currencyPair] = obj.highestAsk;
+		bestBid[obj.currencyPair] = obj.highestBid;
 		if (obj.currencyPair == "BTC_ETH") {
             btceth = obj.last;
             //////////console.log('eth: ' + btceth);
