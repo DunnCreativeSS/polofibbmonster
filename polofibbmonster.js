@@ -122,7 +122,7 @@ function doget(req, res){
 							var ts = Math.round(new Date().getTime() / 1000) - 1000;
 							var tsYesterday = ts - (24 * 3600) - 1000;
 							var trades = []
-							poloniex.returnMyTradeHistory('all', tsYesterday, ts, 500, function(err, data) {
+							poloniex.returnMyTradeHistory('all', tsYesterday, ts, 200, function(err, data) {
 								console.log(err);
 								//console.log(data);
 								var ccc = 0;
