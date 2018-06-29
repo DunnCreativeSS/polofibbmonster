@@ -581,11 +581,11 @@ poloniex.on('message', (channelName, data, seq) => {
                 }
             } else if (data[d].type == 'orderBookRemove') {
                 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask') {
-                    bestAsk[channelName] = data[d].data.rate;
+                    bestAsk[channelName] = data[d].data.rate * 1.005;
 
                 }
                 if (data[d].data.rate >= bestBid[channelName] && data[d].data.type == 'bid') {
-                    bestBid[channelName] = data[d].data.rate;
+                    bestBid[channelName] = data[d].data.rate * 0.995;
 
                 }
             }
