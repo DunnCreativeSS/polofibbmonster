@@ -164,7 +164,7 @@ function doget(req, res){
 		+ 'hours: ' + hours + '<br>'
 		+ 'percent: ' + percent + '%<br>'
 		+ '<h1>percent/hr: ' + percentHr + '%</h1><br>'
-		+ '<h1>total gains (sats): ' + thetotal
+		+ '<h1>total gains (sats): ' + thetotal + '</h1>'
 		+ '<div style="display:none;" id="stoplimits">' + JSON.stringify(stoplimits) + '</div>'
 		+ '<div style="display:none;" id="orders">' + JSON.stringify(orders) + '</div>'
 		+ '<div style="display:none;" id="trades">' + JSON.stringify(trades) + '</div>'
