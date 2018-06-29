@@ -261,7 +261,7 @@ function subs(currencyPair) {
         setTimeout(function() {
             //	//console.log('3');
             poloniex.subscribe(currencyPair);
-        }, Math.random() * 10000);
+        }, Math.random() * 60000);
     }
 }
 
