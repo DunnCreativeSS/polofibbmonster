@@ -223,7 +223,9 @@ poloniex.subscribe('ticker');
 	// //////console.logbasePairs);
 	for (var p in basePairs){
 		for (var a in basePairs[p]){
+			setTimeout(function(){
 			subs(basePairs[p][a].currencyPair);
+			}, Math.random() * 60000);
 		if (p == 'USDT'){
 			volTot += parseFloat(basePairs[p][a].baseVolume / btcusdt);
 		}
