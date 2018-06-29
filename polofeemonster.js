@@ -405,7 +405,7 @@ setInterval(function() {
                                 var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
                                 dosellt[ask] = true;
                                
-                                   stosell(ask, bestAsk[ask], askrate, amt * .998);
+                                   stosell(ask, bestAsk[ask], askrate, amt * .998 * bestAsk[ask]);
                             }
                         }
 					}
