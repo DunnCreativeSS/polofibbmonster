@@ -395,7 +395,7 @@ setInterval(function() {
                             }
                         }
                     }
-					if (!sells.includes(ask) && ask.substr(0, ask.indexOf('_')) == 'BTC'){
+					if (!sells.includes(ask) ){
                         if (balances[ask.substr(ask.indexOf('_') + 1, ask.length)] != 0) {
                             if (ask.substr(0, ask.indexOf('_')) == "BTC") {
                                if (amt * .998 * bestAsk[ask] > 0.0001){
@@ -479,7 +479,7 @@ setInterval(function() {
                         var spread = 100 * (-1 * (1 - bestAsk[bid] / bestBid[bid]))
                         var bidrate = (1 + spread / 100 / 3.15);
                         var askrate = (1 - spread / 100 / 3.15);
-						if (spread >0.75){
+						if (spread >0.64){
                         dobuyt[bid] = true;
 						 if (bid.substr(0, bid.indexOf('_')) == "BTC") {
 						console.log('spread: ' + spread + ' ' + (bestAsk[bid] - bestBid[bid]));
@@ -494,8 +494,7 @@ setInterval(function() {
                         if (dobuyt[bid] == true && bid != "BTC_DOGE"  && bid != "USDT_BTC") {
 							stobuy(bid, bestBid[bid], bidrate, (btc * .998))	
                         } 
-					}
-					} else  if (bid.substr(0, bid.indexOf('_')) == "USDT") {
+					}else  if (bid.substr(0, bid.indexOf('_')) == "USDT") {
 						console.log('spread: ' + spread + ' ' + (bestAsk[bid] - bestBid[bid]));
                             btc = 1.1 * parseFloat(balances.USDT) / 16;
                             if (btc < 1) {
@@ -535,6 +534,7 @@ setInterval(function() {
                         } 
 							}
 					}
+					} 
 					}
                     
                 }
