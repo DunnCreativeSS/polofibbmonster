@@ -404,7 +404,7 @@ setInterval(function() {
                                 var askrate = (1 - spread / 100 / 3.15);
                                 var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
                                 dosellt[ask] = true;
-                               if (amt * .998 / bestAsk[ask] > 0.0001){
+                               if (amt * .998 * bestAsk[ask] > 0.0001){
                                    stosell(ask, bestAsk[ask], askrate, amt * .998);
 							   }
                             }
