@@ -102,7 +102,7 @@ function doget(req, res){
 							var totals = []
 							var btcbal = 0;
 							var orders = []
-							poloniex.returnOpenOrders('all', function(err, data) {
+							poloniex.getMarginPosition('all', function(err, data) {
 								
 							for (var d in data){
 								if (d.substr(0, d.indexOf('_')) == 'BTC'){
@@ -110,7 +110,7 @@ function doget(req, res){
 									for (var a in data[d]){
 										data[d][a].pair = d;
 										data[d][a].currentBid = bestBid[data[d][a].pair];
-										data[d][a].percent = (parseFloat(data[d][a].currentBid) / parseFloat(data[d][a].rate));
+										data[d][a].percent = (parseFloat(data[d][a].pl));
 										orders.push(data[d][a]);
 										btcbal += (parseFloat(data[d][a].amount) * parseFloat(bestBid[data[d][a].pair]))
 									}
@@ -224,7 +224,13 @@ poloniex.subscribe('ticker');
 	for (var p in basePairs){
 		for (var a in basePairs[p]){
 			
-			subs(basePairs[p][a].currencyPair);
+		poloniex.returnTradableBalances(function(err, data) {
+			console.log(data);
+			for (var d in data){
+				console.log(d);
+			subs(d);
+			}
+		});
 		if (p == 'USDT'){
 			volTot += parseFloat(basePairs[p][a].baseVolume / btcusdt);
 		}
@@ -480,87 +486,34 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
     });
 });
 }, 10000);
- function dobuy(d3d, cc, amount){
-	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
+
+ function dosell(d3d, cc, amount){
+	 poloniex.marginSell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell1).toFixed(8), amount.toFixed(8),function (err, data2){
 		 console.log(err)
 		console.log(data2);
-		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (err, data3){
-		console.log(data3);
-		console.log(err);
+ });
+ }
 
+ function dosell2(d3d, cc, amount){
+	 poloniex.marginSell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell2).toFixed(8), amount.toFixed(8),function (err, data2){
+		console.log(data2);
+		console.log(err);
 	});
+ }
+ function dobuy(d3d, cc, amount){
+	 poloniex.marginBuy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8) * 2.5,function (err, data2){
+		 console.log(err)
+		console.log(data2);
  });
  }
 
  function dobuy2(d3d, cc, amount){
-	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
+	 poloniex.marginBuy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8) * 2.5,function (err, data2){
 		console.log(data2);
 		console.log(err);
-		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (err, data3){
-			console.log(data3);
-			console.log(err);
-			
-
-	});
 	});
  }
  var godobuy = true;
-function cancel(d3d, cc, balance){
-	poloniex.cancelOrder(d3d.order1, function(data){
-		poloniex.sell(d3d.trades.currencyPair, d3d.trades.lowestAsk, balance, 0, 0, 0 , function (data3){
-		d3d.cancelled = true;
-		cc.update({
-				'trades.currencyPair': d3d.currencyPair
-			}, {
-				'trades': d3d
-			},
-			function(err, result) {
-
-				if (err) console.log(err);
-				////////////////console.log(result.result);
-				if (result.result.nModified == 0) {
-
-					cc.insertOne({
-						'trades': d3d
-					}, function(err, res) {
-						if (err) console.log(err);
-					  callback(res.result);
-					});
-				} else {
-					callback(result.result);
-				}
-			});
-	});
-	});
- }
- function cancel2(d3d, cc, balance){
-	 poloniex.cancelOrder(d3d.order2, function(data){
-		poloniex.sell(d3d.trades.currencyPair, d3d.trades.lowestAsk, balance, 0, 0, 0 , function (data3){
-		d3d.cancelled = true;
-		cc.update({
-				'trades.currencyPair': d3d.currencyPair
-			}, {
-				'trades': d3d
-			},
-			function(err, result) {
-
-				if (err) console.log(err);
-				////////////////console.log(result.result);
-				if (result.result.nModified == 0) {
-
-					cc.insertOne({
-						'trades': d3d
-					}, function(err, res) {
-						if (err) console.log(err);
-					  callback(res.result);
-					});
-				} else {
-					callback(result.result);
-				}
-			});
-	});
-	});
- }
   function updaterenew(wp, collection, callback){
 	collection.update({
 		'trades.currencyPair': wp.currencyPair
@@ -586,7 +539,7 @@ function doCollections(collections, balances){
 							
 						//console.log('8'); 
     poloniex.returnBalances(function(err, balances) {
-				poloniex.returnOpenOrders('all', function(err, data) {
+				poloniex.getMarginPosition('all', function(err, data) {
         if (err) {
             ////console.log(err.message);
 			
@@ -661,6 +614,30 @@ function collectionDo(collection, data, balances, btc){
 
 									});
 								}
+								if (doc3[d].trades.sold1 == true && !ds.includes(doc3[d].trades.currencyPair)){
+									if (doc3[d].trades.sold1 == true){
+									console.log('sold1 true');
+								}
+								if (!ds.includes(doc3[d].trades.currencyPair)){
+									console.log('ds no include ' + doc3[d].trades.currencyPair);
+									console.log(ds);
+								}
+									doc3[d].trades.sold1 = false;
+									doc3[d].trades.sold2 = false;
+									collection.update({
+									}, {
+										$set: {
+											"trades": doc3[d].trades
+										}
+									}, { multi: true },
+									function(err, result) {
+									   console.log(err);
+										console.log(result.result);
+									godobuy = true;
+															
+
+									});
+								}
 							
 						if (doc3[d].trades.currencyPair.substr(0, doc3[d].trades.currencyPair.indexOf('_')) == "BTC"){
 						var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
@@ -674,12 +651,34 @@ function collectionDo(collection, data, balances, btc){
 						
 						//console.log(doc3[d].trades.currencyPair);
 						//console.log(doc3[d].trades);
+						if (doc3[d].trades.tp){
+							if (doc3[d].trades.bought1 || doc3[d].trades.bought2){
+								if (doc3[d].trades.lowestAsk >= doc3[d].trades.tp){
+									poloniex.closeMarginPosition(doc3[d].trades.currencyPair, function(err, data){
+										console.log('closed margin position!');
+										console.log(err);
+										console.log(data);
+									});
+								}
+							}
+							if (doc3[d].trades.sold1 || doc3[d].trades.sold2){
+								if (doc3[d].trades.lowestAsk <= doc3[d].trades.tp){
+									poloniex.closeMarginPosition(doc3[d].trades.currencyPair, function(err, data){
+										console.log('closed margin position!');
+										console.log(err);
+										console.log(data);
+									});
+								}
+							}
+							
+						}
 						if (doc3[d].trades.bought1 == false){
                         if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.buy1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
                         var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
                             //////console.log(doc3[d].trades.last);
 							//////console.log(doc3[d].trades);
 							doc3[d].trades.bought1 = true;
+							doc3[d].trades.tp = doc3[d].trades.lowestAsk * 1.1;
 							if (godobuy == true){
 								godobuy = false;
 
@@ -702,12 +701,13 @@ function collectionDo(collection, data, balances, btc){
 							}
                         }
 						}
-                        if (doc3[d].trades.buy2) {
+                        if (doc3[d].trades.buy2 && doc3[d].trades.bought2 == false) {
                             if (parseFloat(doc3[d].trades.lowestAsk) <= doc3[d].trades.buy2 && doc3[d].trades.bought2 == false && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
                         var amount = btc / parseFloat(doc3[d].trades.lowestAsk);
 							//////console.log(doc3[d].trades.last);
 							//////console.log(doc3[d].trades);
 							doc3[d].trades.bought2 = true;
+							doc3[d].trades.tp = doc3[d].trades.lowestAsk * 1.1;
 														if (godobuy == true){
 godobuy = false;
 								collection.update({
@@ -728,7 +728,72 @@ godobuy = false;
                             }
 							}
                         }
+						poloniex.returnTradableBalances(function(err, data) {
+						if (doc3[d].trades.sold1 == false){
+                        if (parseFloat(doc3[d].trades.lowestAsk) >= doc3[d].trades.sell1 && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
+                        var amount = data[doc3[d].trades.currencyPair] / 16;
+						if (amount * doc3[d].trades.lowestAsk > 0.0001){
+							
+							
+                            //////console.log(doc3[d].trades.last);
+							//////console.log(doc3[d].trades);
+							doc3[d].trades.sold1 = true;
+							doc3[d].trades.tp = doc3[d].trades.lowestAsk * 0.9;
+							if (godobuy == true){
+								godobuy = false;
+
+							console.log('dosell: ' +  amount);
+							console.log(doc3[d]);
+							collection.update({
+								}, {
+									$set: {
+										"trades": doc3[d].trades
+									}
+								}, { multi: true },
+								function(err, result) {
+								   console.log(err);
+									console.log(result.result);
+								godobuy = true;
+														
+
+								});
+							dosell(doc3[d], collection, amount);
+							}
+                        }
 						}
+						}
+                        if (doc3[d].trades.sell2 && doc3[d].trades.sold2 == false) {
+                            if (parseFloat(doc3[d].trades.lowestAsk) >= doc3[d].trades.sell2 && doc3[d].trades.sold2 == false && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200) {
+                        var amount = data[doc3[d].trades.currencyPair] / 16;
+						if (amount * doc3[d].trades.lowestAsk > 0.0001){
+							//////console.log(doc3[d].trades.last);
+							//////console.log(doc3[d].trades);
+							doc3[d].trades.sold2 = true;
+							doc3[d].trades.tp = doc3[d].trades.lowestAsk * 0.9;
+														if (godobuy == true){
+godobuy = false;
+								collection.update({
+								}, {
+									$set: {
+										"trades": doc3[d].trades
+									}
+								}, { multi: true },
+								function(err, result) {
+								   console.log(err);
+									console.log(result.result);
+								godobuy = true;
+														
+
+								});
+							console.log('dosell2: ' +  amount);
+							dosell2(doc3[d], collection, amount);
+                            }
+						}
+							}
+                        }
+						});
+							}
+
 						}
                     }
 					
