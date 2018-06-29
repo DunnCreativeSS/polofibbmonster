@@ -396,17 +396,18 @@ setInterval(function() {
                         }
                     }
 					if (!sells.includes(ask) ){
+						
+
+						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
+						//console.log((amt * .998 * bestAsk[ask]));
                         if (balances[ask.substr(ask.indexOf('_') + 1, ask.length)] != 0) {
                             if (ask.substr(0, ask.indexOf('_')) == "BTC") {
                                if (amt * .998 * bestAsk[ask] > 0.0001){
-								   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
-                                console.log(ask);
+							//	   console.log(parseFloat(balances[ask.substr(ask.indexOf('_') + 1)]));
+                          //      console.log(ask);
                                 var spread = 100 * (-1 * (1 - bestAsk[ask] / bestBid[ask]))
                                 var bidrate = (1 + spread / 100 / 9.15);
                                 var askrate = (1 - spread / 100 / 9.15);
-
-						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
-						
                                 dosellt[ask] = true;
                                    stosell(ask, bestAsk[ask], askrate, amt * .998);
 							   }
