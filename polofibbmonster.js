@@ -87,6 +87,22 @@ function doget(req, res){
 								}
 							}
 						} 
+						if (doc3[d].trades.sold1 == false){
+							if (doc3[d].trades.currencyPair.substr(0, doc3[d].trades.currencyPair.indexOf('_')) == "BTC" && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200){
+							var sl = {'pair' : doc3[d].trades.currencyPair, 'stoplimit': doc3[d].trades.sell1, 'currentAsk': doc3[d].trades.lowestAsk, 'percent': (parseFloat(doc3[d].trades.lowestAsk) / parseFloat(doc3[d].trades.sell1))}
+							stoplimits.push(sl);
+							}
+						}
+						if (doc3[d].trades.sold2 == false){
+							if (doc3[d].trades.sell2 != undefined){
+								if (doc3[d].trades.currencyPair.substr(0, doc3[d].trades.currencyPair.indexOf('_')) == "BTC" && parseFloat(doc3[d].trades.lowestAsk) > 0.00000200){
+
+							var sl = {'pair' : doc3[d].trades.currencyPair, 'stoplimit': doc3[d].trades.sell2, 'currentAsk': doc3[d].trades.lowestAsk, 'percent': (parseFloat(doc3[d].trades.lowestAsk) / parseFloat(doc3[d].trades.sell2))}
+							
+							stoplimits.push(sl);
+								}
+							}
+						} 
 						}
 					}
 					if (count + 1 <= collections.length - 1){
