@@ -42,6 +42,7 @@ function sortFunction(a,b){
 	return dateA > dateB ? 1 : -1;  
 }; 
 function doget(req, res){
+	try{
 	stoplimits = []
 		orders = []
 		count = 0;
@@ -184,6 +185,9 @@ function doget(req, res){
 		
 		}
 	});
+	}catch(err){
+		res.send(err);
+	}
 }
 app.get('/', function(req, res) {
 	try {
@@ -377,7 +381,7 @@ poloniex.subscribe('ticker');
 	 setTimeout(function(){
 					//	console.log('3');
 					poloniex.subscribe(currencyPair);
-					}, Math.random() *60000);
+					}, Math.random() *120000);
  }
  
  function insert(wp, collection){
