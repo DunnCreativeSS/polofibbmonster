@@ -7,10 +7,10 @@ let poloniex
 poloniex = new Poloniex('574V5VXQ-52IB5ZD5-QXTGDVNR-4Y0C6OT1', process.env.apikey2 , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 var mongodb = "";
 const express = require('express');
-var startDate = new Date('2018/06/29 03:08')
+var startDate = new Date('2018/06/29 07:08')
 var favicon = require('serve-favicon')
 var path = require('path')
- var startBtc = 0.00772116 ; //0.00796575 
+ var startBtc = 0.00758718; //0.00796575 
 var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 	function sortFunction3(a,b){  
