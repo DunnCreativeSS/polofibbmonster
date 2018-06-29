@@ -16,7 +16,7 @@
     "trendyways": "^0.4.2"
   },
   "scripts": {
-    "start": "node polofeemonster.js"
+    "start": "node polofibbmonster.js"
   },
   "deprecated": false,
   "description": "Engine for Polo automation",
