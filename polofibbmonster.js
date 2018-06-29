@@ -496,7 +496,7 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		console.log(data2);
 		console.log(err);
-		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (err, data3){
+		poloniex.sell(d3d.trades.currencyPair, parseFloat(d3d.trades.sell2).toFixed(8), (amount * .998).toFixed(8), 0, 0, 0 , function (err, data3){
 			console.log(data3);
 			console.log(err);
 			
