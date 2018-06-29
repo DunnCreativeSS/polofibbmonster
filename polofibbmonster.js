@@ -134,39 +134,20 @@ function doget(req, res){
 								}
 							}
 							btcbal += parseFloat(balances.BTC);
-							poloniex.returnMarginAccountSummary(function(err, data){
-								btcbal = data.totalValue;
+							poloniex.returnMarginAccountSummary(function(err, data3){
+								console.log(data3.totalValue);
+								btcbal = parseFloat(data3.totalValue);
 							orders.sort(sortFunction2);
 							var ts = Math.round(new Date().getTime() / 1000) - 1000;
 							var tsYesterday = ts - (24 * 3600) - 1000;
 							var trades = []
-							poloniex.returnMyTradeHistory('all', tsYesterday, ts, 200, function(err, data) {
-								console.log(err);
-								//console.log(data);
-								var ccc = 0;
-							for (var d in data){
-							totals.push({'pair': d, 'total': 0});
-								if (data[d].length > 0){
-									for (var a in data[d]){
-										data[d][a].pair = d;
-										if (data[d][a].type == 'sell'){
-											totals[ccc].total += parseFloat(data[d][a].total);
-										}else {
-											totals[ccc].total = totals[ccc].total - parseFloat(data[d][a].total);
-										}
-										trades.push(data[d][a]);
-									
-									}
-								}
-								ccc++;
-							}
+							
 							var percent =  (100 * (-1 * (1 - (btcbal / startBtc)))).toFixed(4);
 					var diff2 = Math.abs(new Date() - startDate);
 					var minutes = Math.floor((diff2/1000)/60);
 					var hours = ((diff2/1000)/60 / 60).toFixed(8);
 					var percentHr = (percent / hours).toFixed(4);
 							//////console.log(balances.BTC);
-							trades.sort(sortFunction3);
 							stoplimits.sort(sortFunction);
 		//////console.log(stoplimits);
 		console.log((totals).toString());
@@ -188,7 +169,7 @@ function doget(req, res){
 		+ '<div id="showData3"></div>'
 		+ '<script>for(var col=[],i=0;i<JSON.parse($("#totals").text()).length;i++)for(var key in JSON.parse($("#totals").text())[i])-1===col.indexOf(key)&&col.push(key);var table6=document.createElement("table");for(tr=table6.insertRow(-1),i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#totals").text()).length;i++){tr=table6.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#totals").text())[i][col[j]]}}var divContainer5=document.getElementById("showData4");divContainer5.innerHTML="",divContainer5.appendChild(table6);for(var col=[],i=0;i<JSON.parse($("#stoplimits").text()).length;i++)for(var key in JSON.parse($("#stoplimits").text())[i])-1===col.indexOf(key)&&col.push(key);var table2=document.createElement("table");for(tr=table2.insertRow(-1),i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#stoplimits").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#stoplimits").text())[i][col[j]]}}var divContainer2=document.getElementById("showData");divContainer2.innerHTML="",divContainer2.appendChild(table2);for(var col=[],i=0;i<JSON.parse($("#orders").text()).length;i++)for(var key in JSON.parse($("#orders").text())[i])-1===col.indexOf(key)&&col.push(key);var table3=document.createElement("table");for(tr=table3.insertRow(-1),i=0;i<col.length;i++){(th=document.createElement("th")).innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders").text()).length;i++){tr=table3.insertRow(-1);for(var j=0;j<col.length;j++){(tabCell=tr.insertCell(-1)).innerHTML=JSON.parse($("#orders").text())[i][col[j]]}}var divContainer3=document.getElementById("showData2");divContainer3.innerHTML="",divContainer3.appendChild(table3);for(col=[],i=0;i<JSON.parse($("#trades").text()).length;i++)for(var key in JSON.parse($("#trades").text())[i])-1===col.indexOf(key)&&col.push(key);var table4=document.createElement("table");for(tr=table4.insertRow(-1),i=0;i<col.length;i++){var th;(th=document.createElement("th")).innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#trades").text()).length;i++){tr=table4.insertRow(-1);for(j=0;j<col.length;j++){var tabCell;(tabCell=tr.insertCell(-1)).innerHTML=JSON.parse($("#trades").text())[i][col[j]]}}var divContainer4=document.getElementById("showData3");divContainer4.innerHTML="",divContainer4.appendChild(table4);</script>');
 							});
-							});
+							
 					});
 						}
 					});
@@ -240,16 +221,19 @@ poloniex.subscribe('ticker');
 	 var volTot = 0;
 	 var count = 0;
 	// //////console.logbasePairs);
+		poloniex.returnTradableBalances(function(err, data) {
 	for (var p in basePairs){
 		for (var a in basePairs[p]){
 			
-		poloniex.returnTradableBalances(function(err, data) {
 			//console.log(data);
 			for (var d in data){
-				//console.log(d);
+			if (d == basePairs[p][a].currencyPair){
+				console.log(d);
 			subs(d);
+				var collection = dbo.collection(basePairs[p][a].currencyPair);
+					//insert(basePairs[p][a], collection);
 			}
-		});
+			}
 		if (p == 'USDT'){
 			volTot += parseFloat(basePairs[p][a].baseVolume / btcusdt);
 		}
@@ -266,6 +250,7 @@ poloniex.subscribe('ticker');
 		count++;
 		}
 	}
+		});
 	////////console.log(volTot);
 	////////console.log(count);
 	////////console.log('avg vol: ' + volTot / count);
@@ -325,7 +310,6 @@ poloniex.subscribe('ticker');
 			}
 			if ((greater.length >= 1 && lesser.length >= 1)){
 				
-				var collection = dbo.collection(winners[p].currencyPair);
 				if (greater[0] != undefined){
 					winners[p].sell1 = greater[0]
 				}
@@ -352,7 +336,6 @@ poloniex.subscribe('ticker');
 						winnas.push(winners[p].currencyPair);
 											
 					
-					//insert(winners[p], collection);
 					}
 					updateStoplimits(winners[p], collection);
 							}
@@ -487,7 +470,7 @@ var collections = []
 setTimeout(function(){
 MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 	console.log(err);
-    var dbo = db.db('polomonster138-6')
+    var dbo = db.db('polomonster138-7')
 	var count = 0;
     dbo.listCollections().toArray(function(err, collInfos) {
         // collInfos is an array of collection info objects that look like:
@@ -829,7 +812,7 @@ godobuy = false;
 var dbo;
 				MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 					console.log(err);
-				dbo = db.db('polomonster138-6')
+				dbo = db.db('polomonster138-7')
 				////console.log('dbo');
 				
 				});
