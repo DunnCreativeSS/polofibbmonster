@@ -405,7 +405,6 @@ setInterval(function() {
                                 var bidrate = (1 + spread / 100 / 3.15);
                                 var askrate = (1 - spread / 100 / 3.15);
 
-						console.log('spread: ' + spread + ' ' + (bestAsk[ask] - bestBid[ask]));
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
 						
                                 dosellt[ask] = true;
@@ -420,7 +419,6 @@ setInterval(function() {
                                 var bidrate = (1 + spread / 100 / 3.15);
                                 var askrate = (1 - spread / 100 / 3.15);
 
-						console.log('spread: ' + spread + ' ' + (bestAsk[ask] - bestBid[ask]));
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
 						
                                 dosellt[ask] = true;
@@ -435,7 +433,6 @@ setInterval(function() {
                                 var bidrate = (1 + spread / 100 / 3.15);
                                 var askrate = (1 - spread / 100 / 3.15);
 
-						console.log('spread: ' + spread + ' ' + (bestAsk[ask] - bestBid[ask]));
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
 						
                                 dosellt[ask] = true;
@@ -450,7 +447,6 @@ setInterval(function() {
                                 var bidrate = (1 + spread / 100 / 3.15);
                                 var askrate = (1 - spread / 100 / 3.15);
 
-						console.log('spread: ' + spread + ' ' + (bestAsk[ask] - bestBid[ask]));
 						var amt = parseFloat(balances[ask.substr(ask.indexOf('_') + 1, ask.length)])
 						
                                 dosellt[ask] = true;
@@ -623,7 +619,9 @@ poloniex.on('message', (channelName, data, seq) => {
 
         var obj = JSON.parse(JSON.stringify(data));
         //////////console.log(obj);
-        if (obj.currencyPair == "BTC_ETH") {
+        bestAsk[obj.currencyPair] = obj.highestBid;
+		bestBid[obj.currencyPair] = obj.lowestAsk;
+		if (obj.currencyPair == "BTC_ETH") {
             btceth = obj.last;
             //////////console.log('eth: ' + btceth);
         } else if (obj.currencyPair == "BTC_XMR") {
@@ -653,28 +651,29 @@ poloniex.on('message', (channelName, data, seq) => {
         if (data[0].type == 'orderBook') {
             //////console.log(Object.keys(data[0].data.asks)[0]);
             //////console.log(Object.keys(data[0].data.bids)[0]);
-            bestAsk[channelName] = Object.keys(data[0].data.asks)[0];
-            bestBid[channelName] = Object.keys(data[0].data.bids)[0];
+			
+          //  bestAsk[channelName] = Object.keys(data[0].data.asks)[0];
+          //  bestBid[channelName] = Object.keys(data[0].data.bids)[0];
 
             //poloniex.unsubscribe(channelName);
         }
         for (var d in data) {
             if (data[d].type == 'orderBookModify') {
                 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask') {
-                    bestAsk[channelName] = data[d].data.rate;
+            //        bestAsk[channelName] = data[d].data.rate;
 
                 }
                 if (data[d].data.rate >= bestAsk[channelName] && data[d].data.type == 'bid') {
-                    bestBid[channelName] = data[d].data.rate;
+            //        bestBid[channelName] = data[d].data.rate;
 
                 }
             } else if (data[d].type == 'orderBookRemove') {
                 if (data[d].data.rate <= bestAsk[channelName] && data[d].data.type == 'ask') {
-                    bestAsk[channelName] = data[d].data.rate * 1.005;
+            //        bestAsk[channelName] = data[d].data.rate * 1.005;
 
                 }
                 if (data[d].data.rate >= bestBid[channelName] && data[d].data.type == 'bid') {
-                    bestBid[channelName] = data[d].data.rate * 0.995;
+              //      bestBid[channelName] = data[d].data.rate * 0.995;
 
                 }
             }
