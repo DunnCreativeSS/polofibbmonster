@@ -199,11 +199,6 @@ poloniex.subscribe('ticker');
  var doVols = false;
  var pairs = [];
  var basePairs = [];
- function sto(currencyPair){
-	 setTimeout(function(){
-			subs(currencyPair);
-			}, Math.random() * 60000);
- }
  function doVol(){
 	 
 	 var bases = [];
@@ -228,7 +223,8 @@ poloniex.subscribe('ticker');
 	// //////console.logbasePairs);
 	for (var p in basePairs){
 		for (var a in basePairs[p]){
-			sto(basePairs[p][a].currencyPair);
+			
+			subs(basePairs[p][a].currencyPair);
 		if (p == 'USDT'){
 			volTot += parseFloat(basePairs[p][a].baseVolume / btcusdt);
 		}
@@ -375,7 +371,7 @@ poloniex.subscribe('ticker');
 	 setTimeout(function(){
 					//	console.log('3');
 					poloniex.subscribe(currencyPair);
-					}, Math.random() * 10000);
+					}, Math.random() *60000);
  }
  
  function insert(wp, collection){
