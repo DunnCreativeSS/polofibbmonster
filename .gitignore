@@ -5,3 +5,5 @@
 ccxt/
 node_modules/
 package-lock.json
+bfx.js
+bitfinex.js
