@@ -347,6 +347,7 @@ poloniex.subscribe('ticker');
 	}
 	function updateStoplimits(wp, collection){
 		
+
 		collection.find({
 
                 }, {
@@ -597,6 +598,25 @@ function doCollections(collections, balances){
 						//console.log('8'); 
     poloniex.returnBalances(function(err, balances) {
 				poloniex.returnOpenOrders('all', function(err, data) {
+					var ts = Math.round(new Date().getTime() / 1000) - 1000;
+					var tsHour = ts - (30 * 60) - 1000;
+					console.log(tsHour);
+						for (var d in data){
+								if (data[d].length > 0){
+									for (var a in data[d]){
+										data[d][a].pair = d;
+										data[d][a].currentBid = bestBid[data[d][a].pair];
+										var date = new Date(data[d][a].date).getTime() / 1000;
+											console.log(date);
+										if (date <= tsHour){
+											poloniex.cancelOrder(parseFloat(data[d][a].orderNumber), function(data){
+												console.log('cancelled');
+											});
+										}
+									}
+								}
+							}
+							
         if (err) {
             ////console.log(err.message);
 			
