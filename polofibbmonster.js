@@ -477,7 +477,7 @@ var collections = []
 setTimeout(function(){
 MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 	console.log(err);
-    var dbo = db.db('polomonster138-ash')
+    var dbo = db.db('polomonster138-jare')
 	var count = 0;
     dbo.listCollections().toArray(function(err, collInfos) {
         // collInfos is an array of collection info objects that look like:
@@ -608,7 +608,8 @@ function doCollections(collections, balances){
 							
 							
 						//console.log('8'); 
-    poloniex.returnBalances(function(err, balances) {
+    
+			
 				poloniex.returnOpenOrders('all', function(err, data) {
 					var ts = Math.round(new Date().getTime() / 1000) - 1000;
 					var tsHour = ts - (30 * 60) - 1000;
@@ -664,7 +665,6 @@ function doCollections(collections, balances){
 
 							}
         }
-            });	
     });
 }
 function collectionDo(collection, data, balances, btc){
@@ -679,6 +679,16 @@ function collectionDo(collection, data, balances, btc){
                 }).toArray(function(err, doc3) {
                     for (var d in doc3) {
 						if (doc3[d].trades){
+							poloniex.returnBalances(function(err, balances) {
+						
+							if (balances[doc3[d].trades.currencyPair.substr(doc3[d].trades.currencyPair.indexOf('_'), doc3[d].trades.currencyPair.length)] != 0){
+								poloniex.sell(doc3[d].trades.currencyPair, parseFloat(doc3[d].trades.sell1).toFixed(8), (balances[doc3[d].trades.currencyPair.substr(doc3[d].trades.currencyPair.indexOf('_'), doc3[d].trades.currencyPair.length)] * .998).toFixed(8), 0, 0, 0 , function (err, data3){
+									console.log(data3);
+									console.log(err);
+
+								});
+							}
+							
 							for (var da in data){
 								if (data[da].length > 0){
 										ds.push(da);
@@ -807,6 +817,7 @@ godobuy = false;
                         }
 						}
 						}
+					})
                     }
 					
 					if (count + 1 <= collections.length - 1){
@@ -822,7 +833,7 @@ godobuy = false;
 var dbo;
 				MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 					console.log(err);
-				dbo = db.db('polomonster138-ash')
+				dbo = db.db('polomonster138-jare')
 				////console.log('dbo');
 				
 				});
