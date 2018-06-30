@@ -651,10 +651,6 @@ function doCollections(collections, balances){
         } else {
             //////console.log(balances.BTC);
 			
-			var btc = parseFloat(balances.BTC) / 16;
-			if (btc < 0.0001){
-				btc = 0.0001;
-			}
 			var count = 0;
 							
             for (var c in collections) {
@@ -681,6 +677,10 @@ function collectionDo(collection, data, balances, btc){
 						if (doc3[d].trades){
 							poloniex.returnBalances(function(err, balances) {
 						
+							var btc = parseFloat(balances.BTC) / 16;
+							if (btc < 0.0001){
+								btc = 0.0001;
+							}
 							if (balances[doc3[d].trades.currencyPair.substr(doc3[d].trades.currencyPair.indexOf('_'), doc3[d].trades.currencyPair.length)] != 0){
 								poloniex.sell(doc3[d].trades.currencyPair, parseFloat(doc3[d].trades.sell1).toFixed(8), (balances[doc3[d].trades.currencyPair.substr(doc3[d].trades.currencyPair.indexOf('_'), doc3[d].trades.currencyPair.length)] * .998).toFixed(8), 0, 0, 0 , function (err, data3){
 									console.log(data3);
