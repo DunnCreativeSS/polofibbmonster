@@ -10,7 +10,7 @@ const express = require('express');
 var startDate = new Date('2018/06/30 01:58')
 var favicon = require('serve-favicon')
 var path = require('path')
- var startBtc = 0.0855; //0.00796575 
+ var startBtc = 0.00776254 ; //0.00796575 
 var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 	function sortFunction3(a,b){  
