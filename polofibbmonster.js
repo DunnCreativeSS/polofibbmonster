@@ -130,7 +130,7 @@ function doget(req, res){
 								var ccc = 0;
 							for (var d in data){
 							totals.push({'pair': d, 'total': 0});
-								if (data[d].length > 0 && d != "USDT_BTC"){
+								if (data[d].length > 0 && !d.startsWith("USDT")){
 									for (var a in data[d]){
 										data[d][a].pair = d;
 										if (data[d][a].type == 'sell'){
