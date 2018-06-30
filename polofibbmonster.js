@@ -689,9 +689,6 @@ function collectionDo(collection, data){
 
 								});
 								}
-								else {
-									console.log('bal * bestAsk not high enough');
-								}
 							}
 							
 							for (var da in data){
