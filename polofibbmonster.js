@@ -7,7 +7,7 @@ let poloniex
 poloniex = new Poloniex('70I6ABA8-69HS4C5S-Q7OT8P2T-6WXK4ZT1', process.env.apikey2 , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 var mongodb = "";
 const express = require('express');
-var startDate = new Date('2018/06/30 01:58')
+var startDate = new Date('2018/06/29 22:08')
 var favicon = require('serve-favicon')
 var path = require('path')
  var startBtc = 0.00776254 ; //0.00796575 
@@ -124,7 +124,7 @@ function doget(req, res){
 							var ts = Math.round(new Date().getTime() / 1000) - 1000;
 							var tsYesterday = ts - (24 * 3600) - 1000;
 							var trades = []
-							poloniex.returnMyTradeHistory('all', tsYesterday, ts, 200, function(err, data) {
+							poloniex.returnMyTradeHistory('all', startDate.getTime() / 1000, ts, 200, function(err, data) {
 								console.log(err);
 								//console.log(data);
 								var ccc = 0;
