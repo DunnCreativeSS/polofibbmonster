@@ -7,10 +7,10 @@ let poloniex
 poloniex = new Poloniex('70I6ABA8-69HS4C5S-Q7OT8P2T-6WXK4ZT1', process.env.apikey2 , { socketTimeout: 130000, nonce: () => new Date().getTime() * 1000 + 5000});
 var mongodb = "";
 const express = require('express');
-var startDate = new Date('2018/06/29 22:08')
+var startDate = new Date('2018/06/30 01:58')
 var favicon = require('serve-favicon')
 var path = require('path')
- var startBtc = 0.0064699346521278; //0.00796575 
+ var startBtc = 0.0855; //0.00796575 
 var app = express()
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 	function sortFunction3(a,b){  
@@ -32,8 +32,8 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 		var orders = []
 		var count = 0;
 function sortFunction2(a,b){  
-	var dateA = (a.percent);
-	var dateB = (b.percent);
+	var dateA = new Date(a.date).getTime();
+	var dateB = new Date(b.date).getTime();
 	return dateA < dateB ? 1 : -1;  
 }; 
 function sortFunction(a,b){  
@@ -43,6 +43,7 @@ function sortFunction(a,b){
 }; 
 function doget(req, res){
 	try{
+		var gosend = true;
 	stoplimits = []
 		orders = []
 		count = 0;
@@ -118,12 +119,12 @@ function doget(req, res){
 								}
 								}
 							}
-							btcbal += parseFloat(balances.BTC);
+							btcbal = parseFloat(balances.BTC);
 							orders.sort(sortFunction2);
 							var ts = Math.round(new Date().getTime() / 1000) - 1000;
 							var tsYesterday = ts - (24 * 3600) - 1000;
 							var trades = []
-							poloniex.returnMyTradeHistory('all', 1530313028, ts, 200, function(err, data) {
+							poloniex.returnMyTradeHistory('all', (startDate.getTime() / 1000), ts, 200, function(err, data) {
 								console.log(err);
 								//console.log(data);
 								var ccc = 0;
@@ -157,10 +158,12 @@ function doget(req, res){
 		for (var t in totals){
 			thetotal+=totals[t].total;
 		}
+		if (gosend == true){
+			gosend = false;
 		thetotal = thetotal * Math.pow(10, 8);
 		res.send('<head><link rel="icon" href="https://polofibbmonster.herokuapp.com/favicon.ico?v=2" /><meta http-equiv="refresh" content="36"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script></head><h1>Don\'t Panic! If the data seems off, wait a minute or so.</h1>'
 		+ 'current time: ' + new Date()
-		+ '<br>BTC Balance (including open orders if sold at current bid): ' + btcbal + '<br>'
+		+ '<br>BTC Balance: ' + btcbal + '<br>'
 		+ 'minutes: ' + minutes + '<br>'
 		+ 'hours: ' + hours + '<br>'
 		+ 'percent: ' + percent + '%<br>'
@@ -176,7 +179,8 @@ function doget(req, res){
 		+ '<div id="showData2"></div><br>closed orders 24hrs: (max 200) (' + trades.length + ')'
 		+ '<div id="showData3"></div>'
 		+ '<script>for(var col=[],i=0;i<JSON.parse($("#totals").text()).length;i++)for(var key in JSON.parse($("#totals").text())[i])-1===col.indexOf(key)&&col.push(key);var table6=document.createElement("table");for(tr=table6.insertRow(-1),i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#totals").text()).length;i++){tr=table6.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#totals").text())[i][col[j]]}}var divContainer5=document.getElementById("showData4");divContainer5.innerHTML="",divContainer5.appendChild(table6);for(var col=[],i=0;i<JSON.parse($("#stoplimits").text()).length;i++)for(var key in JSON.parse($("#stoplimits").text())[i])-1===col.indexOf(key)&&col.push(key);var table2=document.createElement("table");for(tr=table2.insertRow(-1),i=0;i<col.length;i++){var th=document.createElement("th");th.innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#stoplimits").text()).length;i++){tr=table2.insertRow(-1);for(var j=0;j<col.length;j++){var tabCell=tr.insertCell(-1);tabCell.innerHTML=JSON.parse($("#stoplimits").text())[i][col[j]]}}var divContainer2=document.getElementById("showData");divContainer2.innerHTML="",divContainer2.appendChild(table2);for(var col=[],i=0;i<JSON.parse($("#orders").text()).length;i++)for(var key in JSON.parse($("#orders").text())[i])-1===col.indexOf(key)&&col.push(key);var table3=document.createElement("table");for(tr=table3.insertRow(-1),i=0;i<col.length;i++){(th=document.createElement("th")).innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#orders").text()).length;i++){tr=table3.insertRow(-1);for(var j=0;j<col.length;j++){(tabCell=tr.insertCell(-1)).innerHTML=JSON.parse($("#orders").text())[i][col[j]]}}var divContainer3=document.getElementById("showData2");divContainer3.innerHTML="",divContainer3.appendChild(table3);for(col=[],i=0;i<JSON.parse($("#trades").text()).length;i++)for(var key in JSON.parse($("#trades").text())[i])-1===col.indexOf(key)&&col.push(key);var table4=document.createElement("table");for(tr=table4.insertRow(-1),i=0;i<col.length;i++){var th;(th=document.createElement("th")).innerHTML=col[i],tr.appendChild(th)}for(i=0;i<JSON.parse($("#trades").text()).length;i++){tr=table4.insertRow(-1);for(j=0;j<col.length;j++){var tabCell;(tabCell=tr.insertCell(-1)).innerHTML=JSON.parse($("#trades").text())[i][col[j]]}}var divContainer4=document.getElementById("showData3");divContainer4.innerHTML="",divContainer4.appendChild(table4);</script>');
-							});
+							
+							}});
 							});
 						}
 					});
@@ -473,7 +477,7 @@ var collections = []
 setTimeout(function(){
 MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 	console.log(err);
-    var dbo = db.db('polomonster138-333')
+    var dbo = db.db('polomonster138-ash')
 	var count = 0;
     dbo.listCollections().toArray(function(err, collInfos) {
         // collInfos is an array of collection info objects that look like:
@@ -492,6 +496,7 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 });
 }, 10000);
  function dobuy(d3d, cc, amount){
+	 if (d3d.trades.bought1 == false){
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy1).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		 console.log(err)
 		console.log(data2);
@@ -501,9 +506,13 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 
 	});
  });
+	 } else {
+		 console.log('bought1 true, why buy?');
+	 }
  }
 
  function dobuy2(d3d, cc, amount){
+	 if (d3d.trades.bought2 == false){
 	 poloniex.buy(d3d.trades.currencyPair, parseFloat(d3d.trades.buy2).toFixed(8), amount.toFixed(8), 0, 0, 0 , function (err, data2){
 		console.log(data2);
 		console.log(err);
@@ -514,6 +523,9 @@ MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 
 	});
 	});
+	 } else {
+		 console.log('bought2 true, why buy?');
+	 }
  }
  var godobuy = true;
 function cancel(d3d, cc, balance){
@@ -605,13 +617,24 @@ function doCollections(collections, balances){
 								if (data[d].length > 0){
 									for (var a in data[d]){
 										data[d][a].pair = d;
+										//console.log(data[d][a].type);
+										if (data[d][a].type == "buy"){
 										data[d][a].currentBid = bestBid[data[d][a].pair];
 										var date = new Date(data[d][a].date).getTime() / 1000;
-											console.log(date);
-										if (date <= tsHour){
+											//console.log(date); 
+										var date2 = startDate.getTime() / 1000;
+										if (date <= tsHour && date >= date2){
+											console.log(parseFloat(data[d][a].orderNumber));
+											console.log('cancel cancel!');
+											
+											
 											poloniex.cancelOrder(parseFloat(data[d][a].orderNumber), function(data){
 												console.log('cancelled');
 											});
+											
+											
+										}
+										
 										}
 									}
 								}
@@ -666,8 +689,32 @@ function collectionDo(collection, data, balances, btc){
 							//console.log('ds: ');
 							//console.log(ds);
 							if (doc3[d].trades.currencyPair){
-								
-								if (doc3[d].trades.bought1 == true && !ds.includes(doc3[d].trades.currencyPair)){
+								if (doc3[d].trades.buy2){
+								if (doc3[d].trades.bought1 == true && doc3[d].trades.bought2 == true && !ds.includes(doc3[d].trades.currencyPair)){
+									if (doc3[d].trades.bought1 == true){
+									console.log('bought1 and bought2 true');
+								}
+								if (!ds.includes(doc3[d].trades.currencyPair)){
+									console.log('ds no include ' + doc3[d].trades.currencyPair);
+									console.log(ds);
+								}
+									doc3[d].trades.bought1 = false;
+									doc3[d].trades.bought2 = false;
+									collection.update({
+									}, {
+										$set: {
+											"trades": doc3[d].trades
+										}
+									}, { multi: true },
+									function(err, result) {
+									   console.log(err);
+										console.log(result.result);
+									godobuy = true;
+															
+
+									});
+								}
+								} else if (doc3[d].trades.bought1 == true== true && !ds.includes(doc3[d].trades.currencyPair)){
 									if (doc3[d].trades.bought1 == true){
 									console.log('bought1 true');
 								}
@@ -775,7 +822,7 @@ godobuy = false;
 var dbo;
 				MongoClient.connect(process.env.mongodb || mongodb, function(err, db) {
 					console.log(err);
-				dbo = db.db('polomonster138-333')
+				dbo = db.db('polomonster138-ash')
 				////console.log('dbo');
 				
 				});
