@@ -681,7 +681,6 @@ function collectionDo(collection, data){
 							if (btc < 0.0001){
 								btc = 0.0001;
 							}
-							console.log(balances[doc3[d].trades.currencyPair.substr(doc3[d].trades.currencyPair.indexOf('_') +1, doc3[d].trades.currencyPair.length)]);
 							if (balances[doc3[d].trades.currencyPair.substr(doc3[d].trades.currencyPair.indexOf('_') +1, doc3[d].trades.currencyPair.length)] != 0){
 								if (balances[doc3[d].trades.currencyPair.substr(doc3[d].trades.currencyPair.indexOf('_') +1, doc3[d].trades.currencyPair.length)]  * bestAsk[doc3[d].trades.currencyPair] > 0.0001){
 								poloniex.sell(doc3[d].trades.currencyPair, parseFloat(doc3[d].trades.sell1).toFixed(8), (balances[doc3[d].trades.currencyPair.substr(doc3[d].trades.currencyPair.indexOf('_') +1, doc3[d].trades.currencyPair.length)] * .998).toFixed(8), 0, 0, 0 , function (err, data3){
@@ -689,6 +688,9 @@ function collectionDo(collection, data){
 									console.log(err);
 
 								});
+								}
+								else {
+									console.log('bal * bestAsk not high enough');
 								}
 							}
 							
